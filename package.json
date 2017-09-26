@@ -1,0 +1,14 @@
+{
+  "name": "@LegworkStudio/Name",
+  "version": "0.0.1",
+  "description": "Description",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:legworkstudio/rip-it-with-gulp.git"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "gulp4": "^4.0.2"
+  }
+}
