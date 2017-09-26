@@ -9,6 +9,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "gulp4": "^4.0.2"
+    "glob": "^7.1.2",
+    "gulp": "github:gulpjs/gulp#4.0"
   }
 }
