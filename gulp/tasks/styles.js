@@ -19,8 +19,8 @@ let gulp            = require('gulp'),
 
 gulp.task('styles', function() {
 
-  // Lint
-  gulp.src(config.assetPath + '/styles/**/*.s+(a|c)ss')
+  // Lint, Autoprefix & process
+  return gulp.src( config.assetPath + '/styles/**/*.sass')
     .pipe(sassLint({
       options: {
         configFile: path.resolve(__dirname,'..','..') + '/.sass-lint.yml',
@@ -29,9 +29,6 @@ gulp.task('styles', function() {
     }))
     .pipe(sassLint.format())
     .pipe(sassLint.failOnError())
-
-  // Autoprefix and process
-  return gulp.src( config.assetPath + '/styles/**/*.sass')
     .pipe(sass({'style': 'expanded'}))
     .on('error', handleErrors)
     .pipe(autoprefixer({
