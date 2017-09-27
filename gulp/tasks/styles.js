@@ -9,13 +9,28 @@
  non-minified version for the local webserver to ./public/css.
 
 */
-let gulp = require('gulp'),
-    sass = require('gulp-sass'),
-    autoprefixer = require('gulp-autoprefixer'),
-    handleErrors = require('../utils/handle-errors'),
-    config = require('../config');
+let gulp            = require('gulp'),
+    path            = require('path'),
+    sass            = require('gulp-sass'),
+    autoprefixer    = require('gulp-autoprefixer'),
+    sassLint        = require('gulp-sass-lint'),
+    handleErrors    = require('../utils/handle-errors'),
+    config          = require('../config');
 
 gulp.task('styles', function() {
+
+  // Lint
+  gulp.src(config.assetPath + '/styles/**/*.s+(a|c)ss')
+    .pipe(sassLint({
+      options: {
+        configFile: path.resolve(__dirname,'..','..') + '/.sass-lint.yml',
+        formatter: 'stylish'
+      }
+    }))
+    .pipe(sassLint.format())
+    .pipe(sassLint.failOnError())
+
+  // Autoprefix and process
   return gulp.src( config.assetPath + '/styles/**/*.sass')
     .pipe(sass({'style': 'expanded'}))
     .on('error', handleErrors)
