@@ -26,7 +26,7 @@ gulp.task('scripts', (done) => {
 	webpackConfig.entry = manifest;
 
 	// Get manifest and run webpack against scripts
-	return getManifest().then( function(){ scripts() });
+	return getManifest().then( () => { scripts() });
 });
 
 // Get all of our sources and apply Webpack Config ( detects node env )
