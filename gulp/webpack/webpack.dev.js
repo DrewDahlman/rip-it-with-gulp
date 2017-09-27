@@ -1,23 +1,23 @@
-let path    = require('path');
-let webpack = require('webpack');
+let path    = require("path");
+let webpack = require("webpack");
 
 module.exports = {
   output: {
-    filename: '[name].js',
+    filename: "[name].js",
   },
   module: {
     loaders: [
       {
         test: /.js$/,
-        loader: 'babel-loader',
+        loader: "babel-loader",
         exclude: /node_modules/
       },
       {
-        enforce: 'pre',
+        enforce: "pre",
         test: /\.js$/,
-        loader: 'eslint-loader',
+        loader: "eslint-loader",
         query: {
-          configFile: './.eslintrc.js',
+          configFile: "./.eslintrc.js",
           fix: true
         }
       }

@@ -1,16 +1,16 @@
-let path      = require('path'),
-    webpack   = require('webpack'),
-    config    = require('../config');
+let path      = require("path"),
+    webpack   = require("webpack"),
+    config    = require("../config");
 
 module.exports = {
   output: {
-    filename: '[name].js',
+    filename: "[name].js",
   },
   module: {
     loaders: [
       {
         test: /.js$/,
-        loader: 'babel-loader',
+        loader: "babel-loader",
         exclude: /node_modules/
       }
     ]
@@ -24,5 +24,5 @@ module.exports = {
 		  sourceMap: true
 		})
 	],
-	devtool: 'source-map'
+	devtool: "source-map"
 };

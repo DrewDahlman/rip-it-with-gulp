@@ -1,7 +1,7 @@
 /*
    ___      _
   / __|_  _| |_ __
- | (_ | || | | '_ \
+ | (_ | || | | "_ \
   \___|\_,_|_| .__/
              |_|
 
@@ -9,10 +9,10 @@
   the watcher and cranks open your browser so you can get after it.
 
 */
-let gulp 	= require('gulp'),
-		hub 	= require('gulp-hub')(['tasks/*.js']);
+let gulp  = require("gulp"),
+    hub   = require("gulp-hub")(["tasks/*.js"]);
 
 // Add tasks to gulp registry
 gulp.registry(hub);
-gulp.task('default', gulp.parallel('scripts', 'styles', 'watch'));
+gulp.task("default", gulp.parallel("scripts", "styles", "watch"));
 

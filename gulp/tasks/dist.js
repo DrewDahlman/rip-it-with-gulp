@@ -8,8 +8,8 @@
 
 */
 
-let gulp = require('gulp');
+let gulp = require("gulp");
 
 // Dist process
-gulp.task('dist', gulp.series('clean', gulp.parallel('styles','scripts')));
+gulp.task("dist", gulp.series("clean", gulp.parallel("styles","scripts")));
 
