@@ -1,9 +1,9 @@
 /*
-  ___ _        _        
+  ___ _        _
  / __| |_ _  _| |___ ___
  \__ \  _| || | / -_|_-<
  |___/\__|\_, |_\___/__/
-          |__/          
+          |__/
 
  Compile all SASS in the ./src/styles directory, autoprefix it and save a
  non-minified version for the local webserver to ./public/css.

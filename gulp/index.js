@@ -2,17 +2,12 @@ let gulp = require('gulp'),
 		glob = require('glob'),
 		path = require('path'),
 		tasks = glob.sync(path.join(__dirname, './tasks/*.js')),
-		hub_tasks = [];
+    args = process.argv.slice(2);
 
-// console.log(tasks)
-// // Glob and require all tasks
+// Check for production flags
+process.env.NODE_ENV = args[1] === "-e" && args[2] === "production" ? 'production' : 'development';
+
+// Glob and require all tasks
 tasks.forEach( (task) => {
-	// hub_tasks.push(task.replace(__dirname, '.'));
 	require(task);
 });
-
-// let hub = require('gulp-hub')(['tasks/*.js']);
-// gulp.registry(hub);
-
-// require('gulp-load-tasks')('gulp/tasks');
-

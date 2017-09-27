@@ -17,7 +17,8 @@ module.exports = {
         test: /\.js$/,
         loader: 'eslint-loader',
         query: {
-          configFile: './.eslintrc.js'
+          configFile: './.eslintrc.js',
+          fix: true
         }
       }
     ]

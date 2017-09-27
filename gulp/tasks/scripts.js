@@ -14,17 +14,16 @@ let gulp 						= require('gulp'),
 		webpackStream 	= require('webpack-stream'),
 		config 					= require('../config'),
     scriptManifest 	= require('../utils/script-manifest'),
-    handleErrors = require('../utils/handle-errors'),
+    handleErrors    = require('../utils/handle-errors'),
     manifest 				= {};
     srcs 						= [],
     webpackConfig 	= {};
 
 gulp.task('scripts', (done) => {
+
 	// Determine env
 	webpackConfig = process.env.NODE_ENV == "production" ? require('../webpack/webpack.prod.js') : require('../webpack/webpack.dev.js');
 	webpackConfig.entry = manifest;
-
-  console.log(process.env.NODE_ENV)
 
 	// Get manifest and run webpack against scripts
 	return getManifest().then( function(){ scripts() });
