@@ -7,7 +7,7 @@ Notes.
 // TODO: all the things.
 class Application {
   constructor(){
-    var test = '';
+    var test = "Hello";
     console.log(test);
   }
 }
