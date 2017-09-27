@@ -1,4 +1,3 @@
-/dist
 /node_modules
 /.sass-cache
 /public
@@ -6,5 +5,3 @@
 *.sublime-project
 *.sublime-workspace
 .editorconfig
-*.min.js
-*.min.css
