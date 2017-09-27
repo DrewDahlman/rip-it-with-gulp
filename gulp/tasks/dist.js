@@ -1,6 +1,6 @@
 /*
-  ___  _    _   
- |   \(_)__| |_ 
+  ___  _    _
+ |   \(_)__| |_
  | |) | (_-<  _|
  |___/|_/__/\__|
 
@@ -11,11 +11,10 @@
 */
 
 let gulp = require('gulp');
+let args = process.argv.slice(2);
 
-gulp.task('build', (done) => {
-  process.env.NODE_ENV = 'production';
-  gulp.parallel('scripts', 'styles');
-	done();
-});
+// Check for production flags
+process.env.NODE_ENV = args[1] === "-e" && args[2] === "production" ? 'production' : 'development';
 
-gulp.task('dist', gulp.series('clean', gulp.parallel('build')));
+// Dist process
+gulp.task('dist', gulp.series('clean', gulp.parallel('styles','scripts')));

@@ -1,5 +1,5 @@
 let path      = require('path'),
-    webpack   = require('webpack'), 
+    webpack   = require('webpack'),
     config    = require('../config');
 
 module.exports = {

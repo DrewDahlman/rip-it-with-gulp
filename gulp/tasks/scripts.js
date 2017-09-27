@@ -24,6 +24,8 @@ gulp.task('scripts', (done) => {
 	webpackConfig = process.env.NODE_ENV == "production" ? require('../webpack/webpack.prod.js') : require('../webpack/webpack.dev.js');
 	webpackConfig.entry = manifest;
 
+  console.log(process.env.NODE_ENV)
+
 	// Get manifest and run webpack against scripts
 	return getManifest().then( function(){ scripts() });
 });
