@@ -5,4 +5,10 @@ Notes.
 */
 
 // TODO: all the things.
-console.log("hi there")
+class Application {
+  constructor(){
+
+  }
+}
+
+module.exports = Application;

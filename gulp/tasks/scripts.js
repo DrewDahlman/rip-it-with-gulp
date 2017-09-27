@@ -14,6 +14,7 @@ let gulp 						= require('gulp'),
 		webpackStream 	= require('webpack-stream'),
 		config 					= require('../config'),
     scriptManifest 	= require('../utils/script-manifest'),
+    handleErrors = require('../utils/handle-errors'),
     manifest 				= {};
     srcs 						= [],
     webpackConfig 	= {};
@@ -31,6 +32,7 @@ gulp.task('scripts', (done) => {
 function scripts(){
 	return gulp.src(srcs)
     .pipe(webpackStream(webpackConfig))
+    .on('error', handleErrors)
     .pipe(gulp.dest( config.dev + '/scripts' ));
 }
 

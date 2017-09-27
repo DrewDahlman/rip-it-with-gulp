@@ -6,16 +6,27 @@ module.exports = {
     filename: '[name].js',
   },
   module: {
-    loaders: [{
-      test: /.js$/,
-      loader: 'babel-loader',
-      exclude: /node_modules/
-    }]
+    loaders: [
+      {
+        test: /.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/
+      },
+      {
+        enforce: 'pre',
+        test: /\.js$/,
+        loader: 'eslint-loader',
+        query: {
+          configFile: './.eslintrc.js'
+        }
+      }
+    ]
   },
   plugins: [
 		new webpack.ProvidePlugin({
 			jQuery: "jquery",
 			$: "jquery"
-		})
+		}),
+    new webpack.NoEmitOnErrorsPlugin()
 	]
 };
