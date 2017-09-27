@@ -8,9 +8,8 @@
 
 */
 
-var gulp = require('gulp');
-
-var config = require('../config');
+let gulp = require('gulp'),
+		config = require('../config');
 
 gulp.task('watch', function(){
   gulp.watch( config.watchPath + '/scripts/**/**/*.js', gulp.parallel('scripts') );

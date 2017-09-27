@@ -10,11 +10,11 @@
 
 */
 
-var gulp = require('gulp');
+let gulp = require('gulp');
 
 gulp.task('build', (done) => {
   process.env.NODE_ENV = 'production';
-  gulp.parallel('scripts', 'styles')
+  gulp.parallel('scripts', 'styles');
 	done();
 });
 

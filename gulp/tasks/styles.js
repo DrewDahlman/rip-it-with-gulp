@@ -9,12 +9,11 @@
  non-minified version for the local webserver to ./public/css.
 
 */
-var gulp = require('gulp'),
+let gulp = require('gulp'),
     sass = require('gulp-sass'),
     autoprefixer = require('gulp-autoprefixer'),
-    handleErrors = require('../utils/handle-errors');
-
-var config = require('../config');
+    handleErrors = require('../utils/handle-errors'),
+    config = require('../config');
 
 gulp.task('styles', function() {
   return gulp.src( config.assetPath + '/styles/**/*.sass')
