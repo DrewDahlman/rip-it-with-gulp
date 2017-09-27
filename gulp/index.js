@@ -1,6 +1,18 @@
-let glob = require('glob'),
-    tasks = glob.sync('tasks/*.js');
+let gulp = require('gulp'),
+		glob = require('glob'),
+		path = require('path'),
+		tasks = glob.sync(path.join(__dirname, './tasks/*.js')),
+		hub_tasks = [];
 
-tasks.forEach(function(task) {
-  require('./tasks/' + task);
+// console.log(tasks)
+// // Glob and require all tasks
+tasks.forEach( (task) => {
+	// hub_tasks.push(task.replace(__dirname, '.'));
+	require(task);
 });
+
+// let hub = require('gulp-hub')(['tasks/*.js']);
+// gulp.registry(hub);
+
+// require('gulp-load-tasks')('gulp/tasks');
+

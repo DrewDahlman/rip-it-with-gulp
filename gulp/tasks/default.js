@@ -9,8 +9,10 @@
   the watcher and cranks open your browser so you can get after it.
 
 */
-let gulp = require('gulp');
+let gulp 	= require('gulp'),
+		hub 	= require('gulp-hub')(['tasks/*.js']);
 
-gulp.task('default', [], () => {
-  console.log('You did it.');
-});
+// Add tasks to gulp registry
+gulp.registry(hub);
+gulp.task('default', gulp.parallel('scripts', 'styles', 'watch'));
+
