@@ -1,6 +1,9 @@
 let path      = require("path"),
     webpack   = require("webpack"),
-    config    = require("../config");
+    config    = require("../config"),
+    ModernizrWebpackPlugin = require('modernizr-webpack-plugin');
+
+let modernizr_config = require('../../node_modules/modernizr/lib/config-all.json');
 
 module.exports = {
   output: {
@@ -37,7 +40,8 @@ module.exports = {
     }),
 		new webpack.optimize.UglifyJsPlugin({
 		  sourceMap: true,
-		})
+		}),
+    new ModernizrWebpackPlugin(modernizr_config)
 	],
 	devtool: "source-map"
 };

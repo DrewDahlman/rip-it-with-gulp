@@ -1,5 +1,8 @@
-let path    = require("path");
-let webpack = require("webpack");
+let path    = require("path"),
+    webpack = require("webpack"),
+    ModernizrWebpackPlugin = require('modernizr-webpack-plugin');
+
+let modernizr_config = require('../../node_modules/modernizr/lib/config-all.json');
 
 module.exports = {
   output: {
@@ -43,6 +46,7 @@ module.exports = {
     new webpack.ProvidePlugin({
       _: "lodash"
     }),
+    new ModernizrWebpackPlugin(modernizr_config),
     new webpack.NoEmitOnErrorsPlugin()
 	]
 };
