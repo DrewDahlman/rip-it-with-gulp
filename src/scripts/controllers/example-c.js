@@ -30,7 +30,7 @@ class ExampleC extends BaseC {
   ------------------------------------------ */
   build() {
     super.build();
-    this.model.$v = $(require("../../templates/example-v.html")(this.model)).appendTo(this.model.$e);
+    this.model.$v = $(require("templates/example-v.html")(this.model)).appendTo(this.model.$e);
 
     this.observe();
   }
