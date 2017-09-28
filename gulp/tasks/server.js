@@ -9,6 +9,7 @@
 */
 let gulp = require("gulp"),
     browserSync = require("browser-sync").create(),
+    browserSyncReuseTab = require('browser-sync-reuse-tab')(browserSync),
     config = require("../config");
 
 gulp.task('server', function() {
@@ -20,6 +21,7 @@ gulp.task('server', function() {
       config.dev + "/css/**/*.css",
       config.dev + "/scripts/**/*.js",
       config.dev + "/**/*.html"],
-    port: config.port
-  });
+    port: config.port,
+    open: false
+  }, browserSyncReuseTab);
 });

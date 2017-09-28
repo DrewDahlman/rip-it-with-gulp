@@ -8,7 +8,7 @@ let gulp         = require("gulp"),
     config       = require("../config");
 
 gulp.task("markup", function buildHTML() {
-  return gulp.src(config.assetPath + "/markup/*.mustache")
+  return gulp.src(config.assetPath + "/markup/*.html")
   .pipe(mustache(config.meta, {
     extension: ".html"
   }))

@@ -7,9 +7,9 @@ Notes.
 // TODO: all the things.
 class Application {
   constructor(){
-    var test = "Hello";
-    console.log(test);
+    $("body").html(require('../templates/example.html')({name: "neat"}));
   }
 }
 
 module.exports = Application;
+new Application();
