@@ -14,4 +14,4 @@ let gulp  = require("gulp"),
 
 // Add tasks to gulp registry
 gulp.registry(hub);
-gulp.task("default", gulp.parallel("scripts", "styles", "markup", "watch", "server"));
+gulp.task("default", gulp.parallel("clean", "scripts", "styles", "markup", "copy", "watch", "server"));
