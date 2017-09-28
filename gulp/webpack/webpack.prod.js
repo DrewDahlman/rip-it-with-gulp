@@ -25,6 +25,11 @@ module.exports = {
       }
     ]
   },
+  resolve: {
+    alias: {
+      templates: path.resolve(__dirname, "../../src/templates")
+    }
+  },
   plugins: [
 		new webpack.ProvidePlugin({
       'window.jQuery'    : 'jquery',
