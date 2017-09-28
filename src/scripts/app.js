@@ -13,4 +13,4 @@ if(Modernizr.postmessage) console.log("postmessage!");
 import ApplicationC from "./controllers/application-c";
 
 // Send it!
-$( () => { new ApplicationC(); });
+$( () => { window.Namespace = new ApplicationC(); });
