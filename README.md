@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/legworkstudio/ript-it-with-gulp.svg?branch=master)](https://travis-ci.org/legworkstudio/ript-it-with-gulp)
+
 # rip-it-with-gulp
 A cool place to start with Gulp.
 
@@ -9,3 +11,5 @@ A cool place to start with Gulp.
 ## Dist
 To create a dist build, minified with source maps.
 - run `gulp dist -e production`
+
+
