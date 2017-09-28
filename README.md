@@ -19,7 +19,7 @@ Templates & Markup are handled by [mustache](https://mustache.github.io/) which 
 
 To use a template on the client side:
 ```javascript
-let template = require('./templates/example.html')({data})
+let template = require('../../templates/example-v.html')({data})
 ```
 
 ## Bundled libs
