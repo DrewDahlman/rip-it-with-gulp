@@ -14,4 +14,39 @@ A cool place to start with Gulp.
 To create a dist build, minified with source maps.
 - run `gulp dist -e production`
 
+## Templates & Markup
+Templates & Markup are handled by [mustache](https://mustache.github.io/) which allows us to create partials for common used components as well as environment based markup.
 
+To use a template on the client side:
+```javascript
+let template = require('./templates/example.html')({data})
+```
+
+## File structure
+The idea is to have everything live inside of the `src` and build into `public` during dev and dist.
+<pre>
+src
+  ├── assets
+  │   ├── browserconfig.xml
+  │   ├── favicon.ico
+  │   ├── icon.png
+  │   ├── robots.txt
+  │   ├── site.webmanifest
+  │   ├── tile-wide.png
+  │   └── tile.png
+  ├── markup
+  │   ├── index.html
+  │   └── partials
+  │       ├── footer.html
+  │       └── header.html
+  ├── scripts
+  │   ├── application.js
+  │   └── controllers
+  ├── styles
+  │   ├── _main.sass
+  │   ├── _reset.sass
+  │   ├── _vars.sass
+  │   └── application.sass
+  └── templates
+      └── example.html
+</pre>
