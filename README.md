@@ -27,29 +27,4 @@ The project starts off with `lodash`, `jQuery`, and `mustache` prebuilt and incl
 
 ## File structure
 The idea is to have everything live inside of the `src` and build into `public` during dev and dist.
-<pre>
-src
-  ├── assets
-  │   ├── browserconfig.xml
-  │   ├── favicon.ico
-  │   ├── icon.png
-  │   ├── robots.txt
-  │   ├── site.webmanifest
-  │   ├── tile-wide.png
-  │   └── tile.png
-  ├── markup
-  │   ├── index.html
-  │   └── partials
-  │       ├── footer.html
-  │       └── header.html
-  ├── scripts
-  │   ├── application.js
-  │   └── controllers
-  ├── styles
-  │   ├── _main.sass
-  │   ├── _reset.sass
-  │   ├── _vars.sass
-  │   └── application.sass
-  └── templates
-      └── example.html
-</pre>
+
