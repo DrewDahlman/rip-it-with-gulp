@@ -22,6 +22,9 @@ To use a template on the client side:
 let template = require('./templates/example.html')({data})
 ```
 
+## Bundled libs
+The project starts off with `lodash`, `jQuery`, and `mustache` prebuilt and included. You don't need to expose them or import them anywhere.
+
 ## File structure
 The idea is to have everything live inside of the `src` and build into `public` during dev and dist.
 <pre>
