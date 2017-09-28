@@ -11,5 +11,5 @@
 let gulp = require("gulp");
 
 // Dist process
-gulp.task("dist", gulp.series("clean", "styles", "scripts", "markup", gulp.series("copy", "rev-scripts", "rev-styles", "replace", gulp.series("cleanup") )));
+gulp.task("dist", gulp.series("clean", "styles", "scripts", "markup", "copy", "rev-scripts", "rev-styles", "replace", "cleanup"));
 
