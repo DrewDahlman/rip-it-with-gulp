@@ -6,12 +6,7 @@ module.exports = {
     filename: "[name].js",
   },
   module: {
-    loaders: [
-      {
-        test: /.js$/,
-        loader: "babel-loader",
-        exclude: /node_modules/
-      },
+    rules: [
       {
         enforce: "pre",
         test: /\.js$/,
@@ -20,15 +15,20 @@ module.exports = {
           configFile: "./.eslintrc.js",
           fix: true
         }
-      }
-    ],
-    rules: [ {
+      },
+      {
+        test: /.js$/,
+        loader: "babel-loader",
+        exclude: /node_modules/
+      },
+      {
         test: /\.html$/,
         loader: 'mustache-loader'
         // loader: 'mustache-loader?minify'
         // loader: 'mustache-loader?{ minify: { removeComments: false } }'
         // loader: 'mustache-loader?noShortcut'
-    } ]
+      }
+    ]
   },
   plugins: [
 		new webpack.ProvidePlugin({

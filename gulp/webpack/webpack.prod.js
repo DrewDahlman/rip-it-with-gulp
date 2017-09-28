@@ -7,31 +7,36 @@ module.exports = {
     filename: "[name].js",
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /.js$/,
         loader: "babel-loader",
-        exclude: /node_modules/
-      }
-    ],
-    rules: [ {
+        exclude: /node_modules/,
+      },
+      {
         test: /\.html$/,
-        // loader: 'mustache-loader'
+        loader: 'mustache-loader'
         // loader: 'mustache-loader?minify'
-        loader: 'mustache-loader?{ minify: { removeComments: true } }'
+        // loader: 'mustache-loader?{ minify: { removeComments: true } }'
         // loader: 'mustache-loader?noShortcut'
-    } ]
+      }
+    ]
   },
   plugins: [
 		new webpack.ProvidePlugin({
-			jQuery: "jquery",
-			$: "jquery"
-		}),
+      'window.jQuery'    : 'jquery',
+      'window.$'         : 'jquery',
+      'jQuery'           : 'jquery',
+      '$'                : 'jquery'
+    }),
     new webpack.ProvidePlugin({
       Mustache: "mustache"
     }),
+    new webpack.ProvidePlugin({
+      _: "lodash"
+    }),
 		new webpack.optimize.UglifyJsPlugin({
-		  sourceMap: true
+		  sourceMap: true,
 		})
 	],
 	devtool: "source-map"
