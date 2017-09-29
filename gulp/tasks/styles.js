@@ -14,13 +14,15 @@ let gulp            = require("gulp"),
     sass            = require("gulp-sass"),
     autoprefixer    = require("gulp-autoprefixer"),
     sassLint        = require("gulp-sass-lint"),
+    cleanCSS        = require('gulp-clean-css'),
+    sourcemaps      = require('gulp-sourcemaps'),
     handleErrors    = require("../utils/handle-errors"),
     config          = require("../config");
 
-gulp.task("styles", function() {
+gulp.task("styles", function(done) {
 
   // Lint, Autoprefix & process
-  return gulp.src( config.assetPath + "/styles/**/*.sass")
+  gulp.src( config.assetPath + "/styles/**/*.sass")
     .pipe(sassLint({
       options: {
         configFile: path.resolve(__dirname,"..","..") + "/.sass-lint.yml",
@@ -35,5 +37,23 @@ gulp.task("styles", function() {
       "browsers": ["> 0.5%", "last 2 versions", "Firefox ESR", "Opera 12.1"],
       "cascade": false
     }))
-    .pipe(gulp.dest( config.dev + "/css"));
+    .pipe(gulp.dest( config.dev + "/css"))
+    .on('finish', () => {
+      complete(done)
+    });
 });
+
+function complete(done){
+  if( process.env.NODE_ENV == "production" ){
+    gulp.src(config.dev + '/css/*.css')
+      .pipe(sourcemaps.init())
+      .pipe(cleanCSS())
+      .pipe(sourcemaps.write())
+      .pipe(gulp.dest(config.dev + '/css'))
+      .on('finish', () => {
+        done();
+      });
+  } else {
+    done();
+  }
+}

@@ -19,7 +19,11 @@ let gulp    = require("gulp"),
 gulp.task("cleanup", (done) => {
 
   // Copy tmp into public
-  gulp.src([config.prod + '/**/*'])
+  gulp.src([
+    config.prod + '/**/*',
+    "!" + config.prod + '/css/*.json',
+    "!" + config.prod + '/scripts/*.json'
+  ])
   .pipe(gulp.dest(config.dev))
   .on('finish', () => {
     del([ config.prod ]);
