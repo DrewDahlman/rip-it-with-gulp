@@ -1,14 +1,13 @@
 /*
-   ___
-  / __|___ _ __ _  _
- | (__/ _ \ "_ \ || |
-  \___\___/ .__/\_, |
-          |_|   |__/
+      _
+  ___| | ___  __ _ _ __    _   _ _ __
+ / __| |/ _ \/ _` | '_ \  | | | | '_ \
+| (__| |  __/ (_| | | | | | |_| | |_) |
+ \___|_|\___|\__,_|_| |_|  \__,_| .__/
+                                |_|
 
-  Copy the production ready assets to the ./dist folder.
-
-  NOTE: hidden files must be added explicitly to be copied (or use the
-  {"dot": true} setting).
+  Final housekeeping before dist is complete.
+  Cleans out the tmp directory that was made during dist and any leftover files.
 
 */
 
@@ -16,9 +15,22 @@ let gulp    = require("gulp"),
     del     = require("del"),
     config  = require("../config");
 
-gulp.task("cleanup", (done) => {
+/*
+------------------------------------------
+| cleanup:void (-)
+------------------------------------------ */
+gulp.task("cleanup", gulp.series(destroy));
 
-  // Copy tmp into public
+/*
+------------------------------------------
+| destroy:destruction (-)
+|
+| Copies everything from TMP while disting,
+| but leaves any manifests and other junk.
+|
+| Once moved delete the directory.
+------------------------------------------ */
+function destroy(done){
   gulp.src([
     config.prod + '/**/*',
     "!" + config.prod + '/css/*.json',
@@ -29,5 +41,5 @@ gulp.task("cleanup", (done) => {
     del([ config.prod ]);
     done();
   });
+}
 
-});

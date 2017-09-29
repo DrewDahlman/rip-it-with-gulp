@@ -14,4 +14,18 @@ let gulp  = require("gulp"),
 
 // Add tasks to gulp registry
 gulp.registry(hub);
+
+/*
+------------------------------------------
+| default:void (-)
+|
+| The default Gulp task to kick things off
+| - clean
+| - scripts
+| - styles
+| - markup
+| - copy
+| - watch
+| - server
+------------------------------------------ */
 gulp.task("default", gulp.series("clean", "scripts", "styles", "markup", "copy", gulp.parallel("watch", "server")));

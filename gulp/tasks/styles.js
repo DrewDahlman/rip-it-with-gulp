@@ -28,7 +28,7 @@ gulp.task("styles", gulp.series(lint, build, minify));
 
 /*
 ------------------------------------------
-| lint:stream (-)
+| lint:stream
 |
 | Lint the sass.
 ------------------------------------------ */
@@ -46,7 +46,7 @@ function lint(){
 
 /*
 ------------------------------------------
-| build:stream (-)
+| build:stream
 |
 | Build the sass into css with sourcemaps
 ------------------------------------------ */
@@ -65,7 +65,7 @@ function build(){
 
 /*
 ------------------------------------------
-| minify:stream (-)
+| minify:stream
 |
 | Check if production and minify.
 | If not return stream.

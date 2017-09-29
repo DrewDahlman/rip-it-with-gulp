@@ -5,8 +5,8 @@
  |___/\__|_| |_| .__/\__/__/
                |_|
 
- Compile all ES6 in the ./src directory, bundle it and save a
- non-minified version for the local webserver to ./public/js.
+ Compiles all ES6 in the ./src/scripts directory and bundles using webpack.
+ Includes sourcemaps when in production.
 
 */
 let gulp            = require("gulp"),
@@ -20,34 +20,32 @@ let gulp            = require("gulp"),
     srcs            = [],
     webpackConfig   = {};
 
-gulp.task("scripts", (done) => {
+/*
+------------------------------------------
+| scripts:void (-)
+------------------------------------------ */
+gulp.task("scripts", gulp.series(setConfiguration, getManifest, compileScripts));
 
-  // Determine env
+/*
+------------------------------------------
+| setConfiguration:webpackConfiguation
+|
+| Determines the current configuration
+| to load for webpack based on env
+------------------------------------------ */
+function setConfiguration(done){
   webpackConfig = process.env.NODE_ENV == "production" ? require("../webpack/webpack.prod.js") : require("../webpack/webpack.dev.js");
-
-  // Get manifest and run webpack against scripts
-  getManifest()
-    .then( webpackConfig.entry = manifest )
-    .then( scripts )
-    .then( done );
-});
-
-// Get all of our sources and apply Webpack Config ( detects node env )
-function scripts(){
-  return new Promise(function(resolve, reject) {
-    gulp.src(srcs, {since: gulp.lastRun(scripts)} )
-      .pipe(webpackStream(webpackConfig, null, (err, stats) => {
-          logResults(stats);
-          resolve();
-        }
-      ))
-      .on("error", handleErrors)
-      .pipe(gulp.dest( config.dev + "/scripts" ))
-  })
+  done();
 }
 
-// Get the manifest of scripts
-function getManifest(){
+/*
+------------------------------------------
+| getManifest:obj
+|
+| Gets the current manifest of scripts to load.
+| Resolves as a promise
+------------------------------------------ */
+function getManifest(done){
   return new Promise(function(resolve, reject) {
     scriptManifest.sources( function( sources ) {
       for( var i = 0; i < sources.length; i++ ){
@@ -55,13 +53,41 @@ function getManifest(){
         manifest[_s] = "./" + config.assetPath + "/scripts/" + _s + ".js";
         srcs.push(config.assetPath + "/scripts/" + _s + ".js");
       }
-      resolve()
+      resolve();
     });
-  })
+  });
 }
 
-// Log out results
+/*
+------------------------------------------
+| compileScripts:promise
+|
+| Compiles scripts using webpackConfig.
+| Resolves as a promise
+------------------------------------------ */
+function compileScripts(){
+  return new Promise(function(resolve, reject) {
+    gulp.src(srcs, {since: gulp.lastRun(compileScripts)} )
+      .pipe(webpackStream(webpackConfig, null, (err, stats) => {
+          logResults(stats);
+          resolve();
+        }
+      ))
+      .on("error", handleErrors)
+      .pipe(gulp.dest( config.dev + "/scripts" ))
+  });
+}
+
+/*
+------------------------------------------
+| logResults:void (-)
+|
+| Logs out the return from webpack build.
+| Indicates budles created and weights.
+------------------------------------------ */
 function logResults(stats){
+
+  // Default options inside of webpack
   let defaultStatsOptions = {
     colors: gutil.colors.supportsColor,
     timings: false,
@@ -78,11 +104,13 @@ function logResults(stats){
   },
   statsOptions = stats || {};
 
+  // Loop the keys and define
   Object.keys(defaultStatsOptions).forEach( (key) => {
     if (typeof statsOptions[key] === 'undefined') {
       statsOptions[key] = defaultStatsOptions[key];
     }
   });
 
+  // Log out
   gutil.log(stats.toString(statsOptions));
 }

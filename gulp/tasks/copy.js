@@ -12,10 +12,24 @@
 
 */
 
-let gulp    = require("gulp");
-let config  = require("../config");
+let gulp    = require("gulp"),
+    config  = require("../config");
 
-gulp.task("copy", () => {
-  return gulp.src([config.assetPath + "/assets/**/*"])
+/*
+------------------------------------------
+| copy:void (-)
+------------------------------------------ */
+gulp.task("copy", gulp.series(copyFiles));
+
+/*
+------------------------------------------
+| copy:stream (-)
+|
+| Copies fiels from the specified below.
+------------------------------------------ */
+function copyFiles(){
+  return gulp.src([
+    config.assetPath + "/assets/**/*"
+  ])
   .pipe(gulp.dest(config.dev));
-});
+}

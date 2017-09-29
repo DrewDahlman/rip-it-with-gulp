@@ -12,7 +12,19 @@ let gulp    = require("gulp"),
     del     = require("del"),
     config  = require("../config");
 
-gulp.task("clean", (done) => {
+/*
+------------------------------------------
+| clean:void (-)
+------------------------------------------ */
+gulp.task("clean", gulp.series(remove));
+
+/*
+------------------------------------------
+| del:void (-)
+|
+| Deletes everything in specified directories.
+------------------------------------------ */
+function remove(done){
   del([ config.dev ]);
   done();
-});
+}
