@@ -34,17 +34,17 @@ The idea is to have everything live inside of the `src` and build into `public` 
   ├── cleanup
   ├── copy
   ├─┬ default
-  │ └─┬ <series>
+  │ └─┬- series
   │   ├── clean
   │   ├── scripts
   │   ├── styles
   │   ├── markup
   │   ├── copy
-  │   └─┬ <parallel>
+  │   └─┬- parallel
   │     ├── watch
   │     └── server
   ├─┬ dist
-  │ └─┬ <series>
+  │ └─┬- series
   │   ├── clean
   │   ├── styles
   │   ├── scripts
@@ -55,23 +55,23 @@ The idea is to have everything live inside of the `src` and build into `public` 
   │   ├── copy
   │   └── cleanup
   ├─┬ markup
-  │ └─┬ <series>
+  │ └─┬- series
   │   └── compileHTML
   ├─┬ replace
-  │ └─┬ <series>
+  │ └─┬- series
   │   └── replaceRefs
   ├─┬ rev
-  │ └─┬ <series>
+  │ └─┬- series
   │   ├── revScripts
   │   └── revStyles
   ├─┬ scripts
-  │ └─┬ <series>
+  │ └─┬- series
   │   ├── setConfiguration
   │   ├── getManifest
   │   └── compileScripts
   ├── server
   ├─┬ styles
-  │ └─┬ <series>
+  │ └─┬- series
   │   ├── lint
   │   ├── build
   │   └── minify
