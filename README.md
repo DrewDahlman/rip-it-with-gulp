@@ -25,7 +25,7 @@ let template = require('./templates/example.html')(data:json)
 ```
 
 ## Bundled libs
-The project starts off with `lodash`, `jQuery`, and `mustache` prebuilt and included. You don't need to expose them or import them anywhere.
+The project starts off with `lodash`, `jQuery`, `mustache` and `modernizr` prebuilt and included. You don't need to expose them or import them anywhere.
 
 ## File structure
 The idea is to have everything live inside of the `src` and build into `public` during dev and dist.
