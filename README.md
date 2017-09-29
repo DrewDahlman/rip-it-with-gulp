@@ -36,7 +36,7 @@ Need to add a dependency? There are couple ways to do that.
   - Global Dependency
     - `npm install YOUR_DEP_PACKAGE --save`
     - In `gulp/webpack/plugins/plugins.js` add the plugin
-    - ```javascript
+      ```javascript
       new webpack.ProvidePlugin({
         YOUR_DEPENDENCY: "your_dependency"
       })
