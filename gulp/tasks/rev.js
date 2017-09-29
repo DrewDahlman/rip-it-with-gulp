@@ -39,8 +39,8 @@ function revScripts(){
 | Copy source maps.
 ------------------------------------------ */
 function copySourceMaps(){
-  return gulp.src([config.dev + '/scripts/*.map'])
-    .pipe(gulp.dest(config.prod + '/scripts/'))
+  return gulp.src([config.dev + "/scripts/*.map"])
+    .pipe(gulp.dest(config.prod + "/scripts/"))
 }
 
 /*
