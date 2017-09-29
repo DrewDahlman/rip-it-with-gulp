@@ -1,3 +1,39 @@
-/* Colors */
+// Colors
 $black: #000
 $white: #fff
+
+// Base width for vertical offset calcs
+$mobile-base-width: 375px
+$desktop-base-width: 1440px
+
+// Speeds
+$speed-demon: 666ms
+$speed-witch: $speed-demon * 2
+
+// Easing
+$evil-ease: cubic-bezier(.666, 0, .333, 1)
+$ease-in: cubic-bezier(.55, .055, .675, .19)
+$ease-out: cubic-bezier(.215, .61, .355, 1)
+
+// Breakpoints
+$media-480: 480px
+$media-540: 540px
+$media-666: 666px
+$media-768: 768px
+$media-1024: 1024px
+$media-1280: 1280px
+$media-1360: 1360px
+$media-1440: 1440px
+$media-1920: 1920px
+
+@mixin respond-above($min-size)
+  @media all and (min-width: $min-size)
+    @content
+
+@mixin respond-above-ht($min-size)
+  @media all and (min-height: $min-size)
+    @content
+
+@mixin respond-landscape-only
+  @media all and (min-aspect-ratio: 1/1)
+    @content
