@@ -9,7 +9,7 @@ let gulp = require('gulp'),
 gulp.task('rev-styles', () => {
 
   // Styles
-  return gulp.src(config.dev + '/css/**/*.css')
+  return gulp.src(config.dev + '/css/*.css')
     .pipe(rev())
     .pipe(gulp.dest(config.prod + "/css/"))
     .pipe(rev.manifest())

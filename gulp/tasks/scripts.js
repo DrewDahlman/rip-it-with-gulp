@@ -10,6 +10,7 @@
 
 */
 let gulp            = require("gulp"),
+    gutil           = require("gulp-util"),
     webpack         = require("webpack"),
     webpackStream   = require("webpack-stream"),
     config          = require("../config"),
@@ -26,15 +27,47 @@ gulp.task("scripts", (done) => {
   webpackConfig.entry = manifest;
 
   // Get manifest and run webpack against scripts
-  return getManifest().then( () => { scripts() });
+  getManifest()
+    .then( scripts )
+    .then( done );
 });
 
 // Get all of our sources and apply Webpack Config ( detects node env )
 function scripts(){
-  return gulp.src(srcs)
-    .pipe(webpackStream(webpackConfig))
-    .on("error", handleErrors)
-    .pipe(gulp.dest( config.dev + "/scripts" ));
+  return new Promise(function(resolve, reject) {
+    gulp.src(srcs, {since: gulp.lastRun(scripts)} )
+      .pipe(webpackStream(webpackConfig, null, (err, stats) => {
+
+          let defaultStatsOptions = {
+            colors: gutil.colors.supportsColor,
+            hash: false,
+            timings: false,
+            chunks: false,
+            chunkModules: false,
+            modules: false,
+            children: true,
+            version: true,
+            cached: false,
+            cachedAssets: false,
+            reasons: false,
+            source: false,
+            errorDetails: false
+          },
+          statsOptions = stats || {};
+
+          Object.keys(defaultStatsOptions).forEach(function (key) {
+            if (typeof statsOptions[key] === 'undefined') {
+              statsOptions[key] = defaultStatsOptions[key];
+            }
+          });
+
+          gutil.log(stats.toString(statsOptions));
+          resolve();
+        }
+      ))
+      .on("error", handleErrors)
+      .pipe(gulp.dest( config.dev + "/scripts" ))
+  })
 }
 
 // Get the manifest of scripts

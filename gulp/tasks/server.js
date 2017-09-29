@@ -19,8 +19,7 @@ gulp.task('server', function() {
     },
     files: [
       config.dev + "/css/**/*.css",
-      config.dev + "/scripts/**/*.js",
-      config.dev + "/**/*.html"],
+      config.dev + "/scripts/**/*.js"],
     port: config.port,
     open: false
   }, browserSyncReuseTab);

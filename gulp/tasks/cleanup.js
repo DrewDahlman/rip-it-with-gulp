@@ -16,15 +16,14 @@ let gulp    = require("gulp"),
     del     = require("del"),
     config  = require("../config");
 
-gulp.task("cleanup", () => {
+gulp.task("cleanup", (done) => {
 
   // Copy tmp into public
-  return gulp.src([config.prod + '/**/*'])
+  gulp.src([config.prod + '/**/*'])
   .pipe(gulp.dest(config.dev))
   .on('finish', () => {
-    del.sync([
-      config.prod,
-    ],{ force: true });
+    del([ config.prod ]);
+    done();
   });
 
 });
