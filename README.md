@@ -30,6 +30,38 @@ The project starts off with `lodash`, `jQuery`, `mustache` and `modernizr` prebu
 ## File structure
 The idea is to have everything live inside of the `src` and build into `public` during dev and dist.
 
+## Tools
+This project is built on top of a number of different tools best suited for their respective tasks. Using Gulp as the task runner we can easily modify and customize each build to specific project needs.
+
+- Gulp
+  - Task management
+  - Configuration ( `gulp/config.js` )
+  - Reving files
+  - Watching file changes
+  - Compressing images
+  - Uploading to s3 or desired destination
+
+- Webpack
+  - Javascript Bundling
+  - Transpiling
+  - Dependency management
+  - Tree shaking / Deduping
+  - Common modules
+  - Minification
+  - ESLint
+  - Sourcemaps
+
+- Node Sass
+  - Compiling SASS/SCSS files
+  - Minification of css
+  - Autoprefixing
+  - Sourcemaps
+
+- Browsersync
+  - Basic dev server
+  - Hot replacing CSS
+  - Manage multiple devices
+
 ## Tasks
 run `gulp --tasks`
 <pre>
