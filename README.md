@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/legworkstudio/rip-it-with-gulp.svg?branch=master)](https://travis-ci.org/legworkstudio/rip-it-with-gulp)
-[![peer deps](http://img.shields.io/david/peer/legworkstudio/rip-it-with-gulp.svg?style=flat-square)](https://david-dm.org/legworkstudio/rip-it-with-gulp#info=peerDependencies)
 [![dependencies](http://img.shields.io/david/legworkstudio/rip-it-with-gulp.svg?style=flat-square)](https://david-dm.org/legworkstudio/rip-it-with-gulp#info=dependencies)
 
 # rip-it-with-gulp
