@@ -10,6 +10,20 @@
 
 let gulp = require("gulp");
 
-// Dist process
-gulp.task("dist", gulp.series("clean", "styles", "scripts", "markup", "copy", "rev-scripts", "rev-styles", "clean", "replace", "cleanup"));
+/*
+------------------------------------------
+| dist:void (-)
+|
+| The Dist Gulp task for going to production.
+| - clean
+| - styles
+| - scripts
+| - markup
+| - copy
+| - rev
+| - clean
+| - replace
+| - cleanup
+------------------------------------------ */
+gulp.task("dist", gulp.series("clean", "styles", "scripts", "markup",  "rev", "clean", "replace", "copy", "cleanup"));
 

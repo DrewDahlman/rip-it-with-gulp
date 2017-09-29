@@ -28,3 +28,52 @@ The project starts off with `lodash`, `jQuery`, and `mustache` prebuilt and incl
 ## File structure
 The idea is to have everything live inside of the `src` and build into `public` during dev and dist.
 
+## Tasks
+<pre>
+  ├── clean
+  ├── cleanup
+  ├── copy
+  ├─┬ default
+  │ └─┬ <series>
+  │   ├── clean
+  │   ├── scripts
+  │   ├── styles
+  │   ├── markup
+  │   ├── copy
+  │   └─┬ <parallel>
+  │     ├── watch
+  │     └── server
+  ├─┬ dist
+  │ └─┬ <series>
+  │   ├── clean
+  │   ├── styles
+  │   ├── scripts
+  │   ├── markup
+  │   ├── rev
+  │   ├── clean
+  │   ├── replace
+  │   ├── copy
+  │   └── cleanup
+  ├─┬ markup
+  │ └─┬ <series>
+  │   └── compileHTML
+  ├─┬ replace
+  │ └─┬ <series>
+  │   └── replaceRefs
+  ├─┬ rev
+  │ └─┬ <series>
+  │   ├── revScripts
+  │   └── revStyles
+  ├─┬ scripts
+  │ └─┬ <series>
+  │   ├── setConfiguration
+  │   ├── getManifest
+  │   └── compileScripts
+  ├── server
+  ├─┬ styles
+  │ └─┬ <series>
+  │   ├── lint
+  │   ├── build
+  │   └── minify
+  └── watch
+</pre>
