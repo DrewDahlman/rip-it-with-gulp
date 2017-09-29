@@ -40,7 +40,7 @@ Need to add a dependency? There are couple ways to do that.
       new webpack.ProvidePlugin({
         YOUR_DEPENDENCY: "your_dependency"
       })
-    ```
+      ```
     - The key you give your dependency is how you will be able to access it.
     - Make sure you add any configurations if needed ( see Modernizr )
 
