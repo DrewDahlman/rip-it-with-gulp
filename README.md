@@ -27,6 +27,24 @@ let template = require('templates/example.html')(data:json)
 ## Bundled libs
 The project starts off with `lodash`, `jQuery`, `mustache` and `modernizr` prebuilt and included. You don't need to expose them or import them anywhere.
 
+## Dependency Management
+Need to add a dependency? There are couple ways to do that.
+  - Perfile require:
+    - `npm install YOUR_DEP_PACKAGE --save`
+    - Then in places you need it `import MY_PACKAGE from 'my-package'` and use
+
+  - Global Dependency
+    - `npm install YOUR_DEP_PACKAGE --save`
+    - In `gulp/webpack/plugins/plugins.js` add the plugin
+    - ```javascript
+      new webpack.ProvidePlugin({
+        YOUR_DEPENDENCY: "your_dependency"
+      })
+    ```
+    - The key you give your dependency is how you will be able to access it.
+    - Make sure you add any configurations if needed ( see Modernizr )
+
+
 ## File structure
 The idea is to have everything live inside of the `src` and build into `public` during dev and dist.
 

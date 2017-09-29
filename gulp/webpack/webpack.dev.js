@@ -1,8 +1,18 @@
-let path    = require("path"),
-    webpack = require("webpack"),
-    ModernizrWebpackPlugin = require('modernizr-webpack-plugin');
+/*
+              _                      _          _
+__      _____| |__  _ __   __ _  ___| | __   __| | _____   __
+\ \ /\ / / _ \ '_ \| '_ \ / _` |/ __| |/ /  / _` |/ _ \ \ / /
+ \ V  V /  __/ |_) | |_) | (_| | (__|   <  | (_| |  __/\ V /
+  \_/\_/ \___|_.__/| .__/ \__,_|\___|_|\_\  \__,_|\___| \_/
+                   |_|
 
-let modernizr_config = require('../../node_modules/modernizr/lib/config-all.json');
+Webpack Dev configuration.
+*/
+
+let path    = require("path"),
+    webpack = require("webpack");
+
+let PLUGINS = require('./plugins/plugins');
 
 module.exports = {
   output: {
@@ -35,20 +45,5 @@ module.exports = {
       templates: path.resolve(__dirname, "../../src/templates")
     }
   },
-  plugins: [
-		new webpack.ProvidePlugin({
-			'window.jQuery'    : 'jquery',
-      'window.$'         : 'jquery',
-      'jQuery'           : 'jquery',
-      '$'                : 'jquery'
-		}),
-    new webpack.ProvidePlugin({
-      Mustache: "mustache"
-    }),
-    new webpack.ProvidePlugin({
-      _: "lodash"
-    }),
-    new ModernizrWebpackPlugin(modernizr_config),
-    new webpack.NoEmitOnErrorsPlugin()
-	]
+  plugins: PLUGINS.devPlugins()
 };

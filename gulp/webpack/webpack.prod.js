@@ -1,9 +1,19 @@
+/*
+              _                      _                          _
+__      _____| |__  _ __   __ _  ___| | __  _ __  _ __ ___   __| |
+\ \ /\ / / _ \ '_ \| '_ \ / _` |/ __| |/ / | '_ \| '__/ _ \ / _` |
+ \ V  V /  __/ |_) | |_) | (_| | (__|   <  | |_) | | | (_) | (_| |
+  \_/\_/ \___|_.__/| .__/ \__,_|\___|_|\_\ | .__/|_|  \___/ \__,_|
+                   |_|                     |_|
+
+Webpack Prod configuration.
+*/
+
 let path      = require("path"),
     webpack   = require("webpack"),
-    config    = require("../config"),
-    ModernizrWebpackPlugin = require('modernizr-webpack-plugin');
+    config    = require("../config");
 
-let modernizr_config = require('../../node_modules/modernizr/lib/config-all.json');
+let PLUGINS = require('./plugins/plugins');
 
 module.exports = {
   output: {
@@ -11,6 +21,15 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        enforce: "pre",
+        test: /\.js$/,
+        loader: "eslint-loader",
+        query: {
+          configFile: "./.eslintrc.js",
+          fix: true
+        }
+      },
       {
         test: /.js$/,
         loader: "babel-loader",
@@ -27,23 +46,6 @@ module.exports = {
       templates: path.resolve(__dirname, "../../src/templates")
     }
   },
-  plugins: [
-		new webpack.ProvidePlugin({
-      'window.jQuery'    : 'jquery',
-      'window.$'         : 'jquery',
-      'jQuery'           : 'jquery',
-      '$'                : 'jquery'
-    }),
-    new webpack.ProvidePlugin({
-      Mustache: "mustache"
-    }),
-    new webpack.ProvidePlugin({
-      _: "lodash"
-    }),
-		new webpack.optimize.UglifyJsPlugin({
-		  sourceMap: true,
-		}),
-    new ModernizrWebpackPlugin(modernizr_config)
-	],
+  plugins: PLUGINS.prodPlugins(),
 	devtool: "source-map"
 };
