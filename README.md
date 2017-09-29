@@ -10,7 +10,7 @@ A cool place to start with Gulp.
 - Check'r out http://localhost:4000
 
 ## Configure
-You can set basic configurations for your particular setup as well as app metal and build details in the `gulp/config.js` file.
+You can set basic configurations for your particular setup as well as app meta and build details in the `gulp/config.js` file.
 
 ## Dist
 To create a dist build, minified with source maps.
