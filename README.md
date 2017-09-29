@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/legworkstudio/rip-it-with-gulp.svg?branch=master)](https://travis-ci.org/legworkstudio/rip-it-with-gulp)
-[![dependencies](http://img.shields.io/david/legworkstudio/rip-it-with-gulp.svg?style=flat-square)](https://david-dm.org/legworkstudio/rip-it-with-gulp#info=dependencies)
-[![dependencies](http://img.shields.io/david/legworkstudio/rip-it-with-gulp.svg?style=flat-square)](https://david-dm.org/legworkstudio/rip-it-with-gulp?type=dev)
+<a href="https://travis-ci.org/legworkstudio/rip-it-with-gulp.svg?branch=master"><img src="https://travis-ci.org/legworkstudio/rip-it-with-gulp.svg?branch=master.svg" alt="Build Status"></a>
+<a href="https://david-dm.org/legworkstudio/rip-it-with-gulp.svg?branch=master"><img src="https://david-dm.org/legworkstudio/rip-it-with-gulp.svg?branch=master.svg" alt="Dependency Status"></a>
+<a href="https://david-dm.org/legworkstudio/rip-it-with-gulp.svg?branch=master/?type=dev"><img src="https://david-dm.org/legworkstudio/rip-it-with-gulp.svg?branch=master/dev-status.svg" alt="devDependency Status"></a
 
 # rip-it-with-gulp
 A cool place to start with Gulp.
