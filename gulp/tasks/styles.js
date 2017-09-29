@@ -15,8 +15,8 @@ let gulp            = require("gulp"),
     sass            = require("gulp-sass"),
     autoprefixer    = require("gulp-autoprefixer"),
     sassLint        = require("gulp-sass-lint"),
-    cleanCSS        = require('gulp-clean-css'),
-    sourcemaps      = require('gulp-sourcemaps'),
+    cleanCSS        = require("gulp-clean-css"),
+    sourcemaps      = require("gulp-sourcemaps"),
     handleErrors    = require("../utils/handle-errors"),
     config          = require("../config");
 
@@ -71,11 +71,11 @@ function build(){
 | If not return stream.
 ------------------------------------------ */
 function minify(){
-  let minify = gulp.src(config.dev + '/css/*.css');
+  let minify = gulp.src(config.dev + "/css/*.css");
   if( process.env.NODE_ENV == "production" ){
-    minify = gulp.src(config.dev + '/css/*.css')
+    minify = gulp.src(config.dev + "/css/*.css")
       .pipe(cleanCSS())
-      .pipe(gulp.dest(config.dev + '/css'))
+      .pipe(gulp.dest(config.dev + "/css"))
   }
 
   return minify;

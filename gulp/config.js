@@ -11,7 +11,7 @@ module.exports = {
 
   // Build specific settings
   "build": {
-    "browserlist": ['> 0.5%', 'last 2 versions', 'Firefox ESR', 'Opera 12.1']
+    "browserlist": ["> 0.5%", "last 2 versions", "Firefox ESR", "Opera 12.1"]
   },
 
   // Meta for frontend static templates

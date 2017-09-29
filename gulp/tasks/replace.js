@@ -10,21 +10,21 @@ Replaces references in static html files. Basically magic.
 
 */
 
-let gulp = require('gulp'),
-    revReplace = require('gulp-rev-replace'),
-    config = require('../config');
+let gulp = require("gulp"),
+    revReplace = require("gulp-rev-replace"),
+    config = require("../config");
 
 /*
 ------------------------------------------
 | rev:void (-)
 ------------------------------------------ */
-gulp.task('replace', gulp.series(replaceRefs));
+gulp.task("replace", gulp.series(replaceRefs));
 
 /*
 ------------------------------------------
 | replace:stream
 |
-| Replaces all references to rev'd files in
+| Replaces all references to rev"d files in
 | static compiled html.
 ------------------------------------------ */
 function replaceRefs(){

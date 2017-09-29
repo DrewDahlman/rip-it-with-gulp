@@ -10,7 +10,7 @@
 
 let gulp = require("gulp"),
     browserSync = require("browser-sync").create(),
-    browserSyncReuseTab = require('browser-sync-reuse-tab')(browserSync),
+    browserSyncReuseTab = require("browser-sync-reuse-tab")(browserSync),
     config = require("../config");
 
 /*
@@ -21,7 +21,7 @@ let gulp = require("gulp"),
 | Will attempt to focus on already open windows
 | if the app is shut down and restarted.
 ------------------------------------------ */
-gulp.task('server', function() {
+gulp.task("server", function() {
   return browserSync.init({
     server: {
       baseDir: config.root,

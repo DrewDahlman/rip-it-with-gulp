@@ -12,10 +12,10 @@ Make sure you setup any configurations you may need here. Adding a dependency he
 
 */
 
-let webpack = require('webpack');
+let webpack = require("webpack");
 
-let ModernizrWebpackPlugin = require('modernizr-webpack-plugin'),
-    modernizr_config = require('../../../node_modules/modernizr/lib/config-all.json');
+let ModernizrWebpackPlugin = require("modernizr-webpack-plugin"),
+    modernizr_config = require("../../../node_modules/modernizr/lib/config-all.json");
 
 /*
 ------------------------------------------
@@ -28,10 +28,10 @@ module.exports = {
   devPlugins: () => {
     let plugins = [
       new webpack.ProvidePlugin({
-        'window.jQuery'    : 'jquery',
-        'window.$'         : 'jquery',
-        'jQuery'           : 'jquery',
-        '$'                : 'jquery'
+        "window.jQuery"    : "jquery",
+        "window.$"         : "jquery",
+        "jQuery"           : "jquery",
+        "$"                : "jquery"
       }),
       new webpack.ProvidePlugin({
         Mustache: "mustache"
@@ -47,10 +47,10 @@ module.exports = {
   prodPlugins: () => {
     let plugins = [
       new webpack.ProvidePlugin({
-        'window.jQuery'    : 'jquery',
-        'window.$'         : 'jquery',
-        'jQuery'           : 'jquery',
-        '$'                : 'jquery'
+        "window.jQuery"    : "jquery",
+        "window.$"         : "jquery",
+        "jQuery"           : "jquery",
+        "$"                : "jquery"
       }),
       new webpack.ProvidePlugin({
         Mustache: "mustache"

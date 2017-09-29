@@ -11,7 +11,7 @@ Renders static HTML files from mustache.
 */
 
 let gulp         = require("gulp"),
-    fs           = require('fs'),
+    fs           = require("fs"),
     mustache     = require("gulp-mustache"),
     config       = require("../config");
 

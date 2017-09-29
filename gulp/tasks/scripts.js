@@ -109,7 +109,7 @@ function logResults(stats){
 
   // Loop the keys and define
   Object.keys(defaultStatsOptions).forEach( (key) => {
-    if (typeof statsOptions[key] === 'undefined') {
+    if (typeof statsOptions[key] === "undefined") {
       statsOptions[key] = defaultStatsOptions[key];
     }
   });
