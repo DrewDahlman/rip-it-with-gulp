@@ -8,15 +8,15 @@ Creates a rev'd version of files.
 
 */
 
-let gulp = require('gulp'),
-    rev = require('gulp-rev'),
-    config = require('../config');
+let gulp = require("gulp"),
+    rev = require("gulp-rev"),
+    config = require("../config");
 
 /*
 ------------------------------------------
 | rev:void (-)
 ------------------------------------------ */
-gulp.task('rev', gulp.series(revScripts, copySourceMaps, revStyles));
+gulp.task("rev", gulp.series(revScripts, copySourceMaps, revStyles));
 
 /*
 ------------------------------------------
@@ -25,7 +25,7 @@ gulp.task('rev', gulp.series(revScripts, copySourceMaps, revStyles));
 | Revs scripts.
 ------------------------------------------ */
 function revScripts(){
-  return gulp.src(config.dev + '/scripts/*.js')
+  return gulp.src(config.dev + "/scripts/*.js")
     .pipe(rev())
     .pipe(gulp.dest(config.prod + "/scripts/"))
     .pipe(rev.manifest())
@@ -50,7 +50,7 @@ function copySourceMaps(){
 | Revs styles.
 ------------------------------------------ */
 function revStyles(){
-  return gulp.src(config.dev + '/css/*.css')
+  return gulp.src(config.dev + "/css/*.css")
     .pipe(rev())
     .pipe(gulp.dest(config.prod + "/css/"))
     .pipe(rev.manifest())

@@ -25,7 +25,7 @@ To use a template on the client side: ( note this auto resolves the path so no n
 let template = require('templates/example.html')(data:json)
 ```
 
-## Bundled libs
+## Bundled Libs
 The project starts off with `lodash`, `jQuery`, `mustache` and `modernizr` prebuilt and included. You don't need to expose them or import them anywhere.
 
 ## Dependency Management
@@ -47,7 +47,7 @@ Need to add a dependency? There are couple ways to do that.
     - Make sure you add any configurations if needed ( see Modernizr )
 
 
-## File structure
+## File Structure
 The idea is to have everything live inside of the `src` and build into `public` during dev and dist.
 
 ## Tools
@@ -62,18 +62,18 @@ This project is built on top of a number of different tools best suited for thei
   - Uploading to s3 or desired destination
 
 - Webpack
-  - Javascript Bundling
+  - JavaScript bundling
   - Transpiling
   - Dependency management
-  - Tree shaking / Deduping
+  - Tree shaking / deduping
   - Common modules
   - Minification
   - ESLint
   - Sourcemaps
 
 - Node Sass
-  - Compiling SASS/SCSS files
-  - Minification of css
+  - Compiling Sass/SCSS files
+  - Minification of CSS
   - Autoprefixing
   - Sourcemaps
 

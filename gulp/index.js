@@ -11,7 +11,7 @@ This is the main entry point for gulp.
 For some reading about the upgrade to 4.0:
   - https://www.joezimjs.com/javascript/complete-guide-upgrading-gulp-4/
 
-This project autoloads all tasks, so if adding a new task just create the tasks base file and assign it's name and gulp will automatically load it and make it available to use.
+This project autoloads all tasks, so if adding a new task just create the tasks base file and assign its name and gulp will automatically load it and make it available to use.
 
 */
 

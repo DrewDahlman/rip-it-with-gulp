@@ -13,7 +13,7 @@ let path      = require("path"),
     webpack   = require("webpack"),
     config    = require("../config");
 
-let PLUGINS = require('./plugins/plugins');
+let PLUGINS = require("./plugins/plugins");
 
 module.exports = {
   output: {
@@ -37,7 +37,7 @@ module.exports = {
       },
       {
         test: /\.html$/,
-        loader: 'mustache-loader'
+        loader: "mustache-loader"
       }
     ]
   },

@@ -32,11 +32,11 @@ gulp.task("cleanup", gulp.series(destroy));
 ------------------------------------------ */
 function destroy(done){
   gulp.src([
-    config.prod + '/**/*',
-    '!' + config.prod + '/**/*.json'
+    config.prod + "/**/*",
+    "!" + config.prod + "/**/*.json"
   ])
   .pipe(gulp.dest(config.dev))
-  .on('finish', () => {
+  .on("finish", () => {
     del([ config.prod ]);
     done();
   });
