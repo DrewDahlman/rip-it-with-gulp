@@ -9,6 +9,7 @@
  non-minified version for the local webserver to ./public/css.
 
 */
+
 let gulp            = require("gulp"),
     path            = require("path"),
     sass            = require("gulp-sass"),
@@ -19,10 +20,20 @@ let gulp            = require("gulp"),
     handleErrors    = require("../utils/handle-errors"),
     config          = require("../config");
 
-gulp.task("styles", function(done) {
+/*
+------------------------------------------
+| styles:void (-)
+------------------------------------------ */
+gulp.task("styles", gulp.series(lint, build, minify));
 
-  // Lint, Autoprefix & process
-  gulp.src( config.assetPath + "/styles/**/*.sass")
+/*
+------------------------------------------
+| lint:stream (-)
+|
+| Lint the sass.
+------------------------------------------ */
+function lint(){
+  return gulp.src( config.assetPath + "/styles/**/*.sass")
     .pipe(sassLint({
       options: {
         configFile: path.resolve(__dirname,"..","..") + "/.sass-lint.yml",
@@ -31,29 +42,41 @@ gulp.task("styles", function(done) {
     }))
     .pipe(sassLint.format())
     .pipe(sassLint.failOnError())
+}
+
+/*
+------------------------------------------
+| build:stream (-)
+|
+| Build the sass into css with sourcemaps
+------------------------------------------ */
+function build(){
+  return gulp.src( config.assetPath + "/styles/**/*.sass")
+    .pipe(sourcemaps.init())
     .pipe(sass({"style": "expanded"}))
     .on("error", handleErrors)
     .pipe(autoprefixer({
-      "browsers": ["> 0.5%", "last 2 versions", "Firefox ESR", "Opera 12.1"],
+      "browsers": config.build.browserlist,
       "cascade": false
     }))
-    .pipe(gulp.dest( config.dev + "/css"))
-    .on('finish', () => {
-      complete(done)
-    });
-});
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest( config.dev + "/css" ))
+}
 
-function complete(done){
+/*
+------------------------------------------
+| minify:stream (-)
+|
+| Check if production and minify.
+| If not return stream.
+------------------------------------------ */
+function minify(){
+  let minify = gulp.src(config.dev + '/css/*.css');
   if( process.env.NODE_ENV == "production" ){
-    gulp.src(config.dev + '/css/*.css')
-      .pipe(sourcemaps.init())
+    minify = gulp.src(config.dev + '/css/*.css')
       .pipe(cleanCSS())
-      .pipe(sourcemaps.write())
       .pipe(gulp.dest(config.dev + '/css'))
-      .on('finish', () => {
-        done();
-      });
-  } else {
-    done();
   }
+
+  return minify;
 }
