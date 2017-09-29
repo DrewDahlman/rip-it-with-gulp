@@ -19,9 +19,9 @@ To create a dist build, minified with source maps.
 ## Templates & Markup
 Templates & Markup are handled by [mustache](https://mustache.github.io/) which allows us to create partials for common used components as well as environment based markup.
 
-To use a template on the client side:
+To use a template on the client side: ( note this auto resolves the path so no need to ever use `../../` the base is always `templates` )
 ```javascript
-let template = require('./templates/example.html')(data:json)
+let template = require('templates/example.html')(data:json)
 ```
 
 ## Bundled libs
