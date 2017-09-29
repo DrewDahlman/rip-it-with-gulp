@@ -7,7 +7,10 @@ A cool place to start with Gulp.
 ## Getting Started
 - run `npm install`
 - run `gulp`
-- Check'r out http://localhost:400
+- Check'r out http://localhost:4000
+
+## Configure
+You can set basic configurations for your particular setup as well as app metal and build details in the `gulp/config.js` file.
 
 ## Dist
 To create a dist build, minified with source maps.
@@ -18,7 +21,7 @@ Templates & Markup are handled by [mustache](https://mustache.github.io/) which 
 
 To use a template on the client side:
 ```javascript
-let template = require('./templates/example.html')({data})
+let template = require('./templates/example.html')(data:json)
 ```
 
 ## Bundled libs
