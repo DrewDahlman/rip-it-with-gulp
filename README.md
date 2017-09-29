@@ -31,7 +31,7 @@ The project starts off with `lodash`, `jQuery`, `mustache` and `modernizr` prebu
 Need to add a dependency? There are couple ways to do that.
   - Perfile require:
     - `npm install YOUR_DEP_PACKAGE --save`
-    - Then in places you need it `import MY_PACKAGE from 'my-package'` and use
+    - Then in places you need it `import MY_PACKAGE from 'my-package'` and use in files you need it.
 
   - Global Dependency
     - `npm install YOUR_DEP_PACKAGE --save`
