@@ -5,8 +5,9 @@
 A cool place to start with Gulp.
 
 ## Getting Started
-- run `npm install`
-- run `gulp`
+- Run `npm install`
+- Run `gulp`
+  - If you get an error running `gulp`, try running `npm i -g gulp-cli`
 - Check'r out http://localhost:4000
 
 ## Configure
