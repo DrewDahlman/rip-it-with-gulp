@@ -62,6 +62,10 @@ This project is built on top of a number of different tools best suited for thei
   - Hot replacing CSS
   - Manage multiple devices
 
+- Mustache
+  - Static HTML creation using partials and includes
+  - Dynamic clientside templates for javascript
+
 ## Tasks
 run `gulp --tasks`
 <pre>
