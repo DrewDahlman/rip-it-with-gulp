@@ -46,9 +46,9 @@ function setConfiguration(done){
 | Resolves as a promise
 ------------------------------------------ */
 function getManifest(done){
-  return new Promise(function(resolve, reject) {
-    scriptManifest.sources( function( sources ) {
-      for( var i = 0; i < sources.length; i++ ){
+  return new Promise( (resolve, reject) => {
+    scriptManifest.sources( ( sources ) => {
+      for( let i = 0; i < sources.length; i++ ){
         let _s = sources[i];
         manifest[_s] = "./" + config.assetPath + "/scripts/" + _s + ".js";
         srcs.push(config.assetPath + "/scripts/" + _s + ".js");
@@ -69,7 +69,7 @@ function compileScripts(){
   // Set the entry based on manifest
   webpackConfig.entry = manifest;
 
-  return new Promise(function(resolve, reject) {
+  return new Promise( (resolve, reject) => {
     gulp.src(srcs, {since: gulp.lastRun(compileScripts)} )
       .pipe(webpackStream(webpackConfig, null, (err, stats) => {
           logResults(stats);
