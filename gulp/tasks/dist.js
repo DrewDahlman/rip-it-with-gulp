@@ -19,10 +19,10 @@ let gulp = require("gulp");
 | - styles
 | - scripts
 | - markup
-| - copy
 | - rev
 | - clean
 | - replace
+| - copy
 | - cleanup
 ------------------------------------------ */
 gulp.task("dist", gulp.series("clean", "styles", "scripts", "markup",  "rev", "clean", "replace", "copy", "cleanup"));

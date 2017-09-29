@@ -16,7 +16,7 @@ let gulp = require('gulp'),
 ------------------------------------------
 | rev:void (-)
 ------------------------------------------ */
-gulp.task('rev', gulp.series(revScripts, revStyles));
+gulp.task('rev', gulp.series(revScripts, copySourceMaps, revStyles));
 
 /*
 ------------------------------------------
@@ -30,6 +30,17 @@ function revScripts(){
     .pipe(gulp.dest(config.prod + "/scripts/"))
     .pipe(rev.manifest())
     .pipe(gulp.dest(config.prod + "/scripts/"));
+}
+
+/*
+------------------------------------------
+| copySourceMaps:void (-)
+|
+| Copy source maps.
+------------------------------------------ */
+function copySourceMaps(){
+  return gulp.src([config.dev + '/scripts/*.map'])
+    .pipe(gulp.dest(config.prod + '/scripts/'))
 }
 
 /*

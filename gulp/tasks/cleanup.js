@@ -33,8 +33,7 @@ gulp.task("cleanup", gulp.series(destroy));
 function destroy(done){
   gulp.src([
     config.prod + '/**/*',
-    "!" + config.prod + '/css/*.json',
-    "!" + config.prod + '/scripts/*.json'
+    '!' + config.prod + '/**/*.json'
   ])
   .pipe(gulp.dest(config.dev))
   .on('finish', () => {
