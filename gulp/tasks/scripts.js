@@ -5,8 +5,8 @@
  |___/\__|_| |_| .__/\__/__/
                |_|
 
- Compile all ES6 in the ./src directory, bundle it and save a
- non-minified version for the local webserver to ./public/js.
+ Compiles all ES6 in the ./src/scripts directory and bundles using webpack.
+ Includes sourcemaps when in production.
 
 */
 let gulp            = require("gulp"),
