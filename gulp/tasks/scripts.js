@@ -24,10 +24,10 @@ gulp.task("scripts", (done) => {
 
   // Determine env
   webpackConfig = process.env.NODE_ENV == "production" ? require("../webpack/webpack.prod.js") : require("../webpack/webpack.dev.js");
-  webpackConfig.entry = manifest;
 
   // Get manifest and run webpack against scripts
   getManifest()
+    .then( webpackConfig.entry = manifest )
     .then( scripts )
     .then( done );
 });
@@ -37,31 +37,7 @@ function scripts(){
   return new Promise(function(resolve, reject) {
     gulp.src(srcs, {since: gulp.lastRun(scripts)} )
       .pipe(webpackStream(webpackConfig, null, (err, stats) => {
-
-          let defaultStatsOptions = {
-            colors: gutil.colors.supportsColor,
-            hash: false,
-            timings: false,
-            chunks: false,
-            chunkModules: false,
-            modules: false,
-            children: true,
-            version: true,
-            cached: false,
-            cachedAssets: false,
-            reasons: false,
-            source: false,
-            errorDetails: false
-          },
-          statsOptions = stats || {};
-
-          Object.keys(defaultStatsOptions).forEach(function (key) {
-            if (typeof statsOptions[key] === 'undefined') {
-              statsOptions[key] = defaultStatsOptions[key];
-            }
-          });
-
-          gutil.log(stats.toString(statsOptions));
+          logResults(stats);
           resolve();
         }
       ))
@@ -82,4 +58,31 @@ function getManifest(){
       resolve()
     });
   })
+}
+
+// Log out results
+function logResults(stats){
+  let defaultStatsOptions = {
+    colors: gutil.colors.supportsColor,
+    timings: false,
+    chunks: false,
+    chunkModules: false,
+    modules: false,
+    children: true,
+    version: true,
+    cached: false,
+    cachedAssets: false,
+    reasons: false,
+    source: false,
+    errorDetails: false
+  },
+  statsOptions = stats || {};
+
+  Object.keys(defaultStatsOptions).forEach( (key) => {
+    if (typeof statsOptions[key] === 'undefined') {
+      statsOptions[key] = defaultStatsOptions[key];
+    }
+  });
+
+  gutil.log(stats.toString(statsOptions));
 }
