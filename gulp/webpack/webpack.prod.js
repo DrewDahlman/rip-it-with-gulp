@@ -19,9 +19,6 @@ module.exports = {
       {
         test: /\.html$/,
         loader: 'mustache-loader'
-        // loader: 'mustache-loader?minify'
-        // loader: 'mustache-loader?{ minify: { removeComments: true } }'
-        // loader: 'mustache-loader?noShortcut'
       }
     ]
   },
