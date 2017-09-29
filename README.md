@@ -93,44 +93,45 @@ run `gulp --tasks`
   ├── cleanup
   ├── copy
   ├─┬ default
-  │ └─┬- series
+  │ └─┬ series
   │   ├── clean
   │   ├── scripts
   │   ├── styles
   │   ├── markup
   │   ├── copy
-  │   └─┬- parallel
+  │   └─┬ <parallel>
   │     ├── watch
   │     └── server
   ├─┬ dist
-  │ └─┬- series
+  │ └─┬ series
   │   ├── clean
-  │   ├── styles
   │   ├── scripts
+  │   ├── styles
   │   ├── markup
   │   ├── rev
-  │   ├── clean
   │   ├── replace
+  │   ├── clean
   │   ├── copy
   │   └── cleanup
   ├─┬ markup
-  │ └─┬- series
+  │ └─┬ series
   │   └── compileHTML
   ├─┬ replace
-  │ └─┬- series
+  │ └─┬ series
   │   └── replaceRefs
   ├─┬ rev
-  │ └─┬- series
+  │ └─┬ series
   │   ├── revScripts
+  │   ├── copySourceMaps
   │   └── revStyles
   ├─┬ scripts
-  │ └─┬- series
+  │ └─┬ series
   │   ├── setConfiguration
   │   ├── getManifest
   │   └── compileScripts
   ├── server
   ├─┬ styles
-  │ └─┬- series
+  │ └─┬ series
   │   ├── lint
   │   ├── build
   │   └── minify
