@@ -13,8 +13,6 @@ let gulp    = require("gulp"),
     config  = require("../config");
 
 gulp.task("clean", (done) => {
-  del.sync([
-    config.dev,
-  ],{ force: true });
+  del([ config.dev ]);
   done();
 });
