@@ -30,9 +30,13 @@ gulp.task("replace", gulp.series(replaceRefs));
 function replaceRefs(){
   let scripts_manifest = gulp.src(config.prod + "/scripts/rev-manifest.json");
   let css_manifest = gulp.src(config.prod + "/css/rev-manifest.json");
-
-  return gulp.src([config.dev + "/*.html"])
-    .pipe(revReplace({manifest: scripts_manifest}))
-    .pipe(revReplace({manifest: css_manifest}))
-    .pipe(gulp.dest(config.prod));
+  return new Promise( (resolve, reject) => {
+    gulp.src([config.dev + "/*.html"])
+      .pipe(revReplace({manifest: scripts_manifest}))
+      .pipe(revReplace({manifest: css_manifest}))
+      .pipe(gulp.dest(config.prod))
+      .on('finish', () => {
+        resolve();
+      })
+  })
 }

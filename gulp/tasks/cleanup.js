@@ -19,7 +19,21 @@ let gulp    = require("gulp"),
 ------------------------------------------
 | cleanup:void (-)
 ------------------------------------------ */
-gulp.task("cleanup", gulp.series(destroy));
+gulp.task("cleanup", gulp.series(copyProd, destroy));
+
+/*
+------------------------------------------
+| copyProd:void (-)
+|
+| Copy files from TMP.
+------------------------------------------ */
+function copyProd(){
+  return gulp.src([
+    config.prod + "/**/*",
+    "!" + config.prod + "/**/*.json"
+  ])
+  .pipe(gulp.dest( config.dev ))
+}
 
 /*
 ------------------------------------------
@@ -31,14 +45,6 @@ gulp.task("cleanup", gulp.series(destroy));
 | Once moved delete the directory.
 ------------------------------------------ */
 function destroy(done){
-  gulp.src([
-    config.prod + "/**/*",
-    "!" + config.prod + "/**/*.json"
-  ])
-  .pipe(gulp.dest(config.dev))
-  .on("finish", () => {
-    del([ config.prod ]);
-    done();
-  });
+  return del(config.prod);
 }
 
