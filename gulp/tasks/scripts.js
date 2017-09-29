@@ -16,9 +16,9 @@ let gulp            = require("gulp"),
     config          = require("../config"),
     scriptManifest  = require("../utils/script-manifest"),
     handleErrors    = require("../utils/handle-errors"),
-    manifest        = {};
-    srcs            = [],
-    webpackConfig   = {};
+    manifest        = {},
+    webpackConfig   = {},
+    srcs            = [];
 
 /*
 ------------------------------------------
