@@ -29,6 +29,7 @@ The project starts off with `lodash`, `jQuery`, and `mustache` prebuilt and incl
 The idea is to have everything live inside of the `src` and build into `public` during dev and dist.
 
 ## Tasks
+run `gulp --tasks`
 <pre>
   ├── clean
   ├── cleanup
