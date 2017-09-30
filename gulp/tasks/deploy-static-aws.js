@@ -52,11 +52,14 @@ function aws(done){
   // deploy
   generateManifest( config.dev)
   .then( () => {
-    parseDir( config.dev )
+    emptyBucket()
     .then( () => {
-      console.log("Site now live at: " + config.aws.bucket + ".s3.amazonaws.com");
-      done();
-    })
+      parseDir( config.dev )
+      .then( () => {
+        done();
+        console.log("Site now live at: " + config.aws.bucket + ".s3.amazonaws.com");
+      });
+    });
   });
 }
 
@@ -76,7 +79,6 @@ function emptyBucket(){
     // Clear Everything out
     s3.listObjects(params, (err, data) => {
       if (err) console.log(err);
-      console.log(data)
 
       params = {Bucket: config.aws.bucket};
       params.Delete = {Objects:[]};
@@ -87,7 +89,7 @@ function emptyBucket(){
 
       s3.deleteObjects(params, (err, data) => {
         console.log("Bucket emptied!");
-        resolve(data);
+        resolve();
       });
     });
   });
