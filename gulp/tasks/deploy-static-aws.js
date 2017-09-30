@@ -44,7 +44,7 @@ function aws(done){
 
   // S3
   s3 = new AWS.S3();
-  emptyBucket(function(){
+  emptyBucket( () => {
     console.log("Clean Complete");
     parseDir( config.dev );
   });
@@ -58,26 +58,24 @@ function aws(done){
 | Empty the bucket.
 ------------------------------------------ */
 function emptyBucket(callback){
-  var params = {
+  let params = {
     Bucket: config.aws.bucket,
     Prefix: ""
   };
 
   // Clear Everything out
-  s3.listObjects(params, function(err, data) {
+  s3.listObjects(params, (err, data) => {
     if (err) console.log(err);
     if (data.Contents.length == 0) callback();
 
     params = {Bucket: config.aws.bucket};
     params.Delete = {Objects:[]};
 
-    data.Contents.forEach(function(content) {
+    data.Contents.forEach( (content) => {
       params.Delete.Objects.push({Key: content.Key});
     });
 
-    s3.deleteObjects(params, function(err, data) {
-      callback();
-    });
+    s3.deleteObjects(params, (err, data) => { callback(); });
   });
 }
 
@@ -88,12 +86,12 @@ function emptyBucket(callback){
 | Recursive function to go over files in directories.
 ------------------------------------------ */
 function parseDir( dir ){
-  fs.readdir( dir, function(err, files) {
-    files.forEach( function(file) {
+  fs.readdir( dir, (err, files) => {
+    files.forEach( (file) => {
       if( path.extname(file) != "" ){
         upload(dir, dir + "/" + file);
       } else {
-        var params = {
+        let params = {
           Bucket: config.aws.bucket,
           Prefix: dir.replace(dir + "/", ""),
           Key: "",
@@ -113,7 +111,7 @@ function parseDir( dir ){
 | Upload files.
 ------------------------------------------ */
 function upload(dir, file ){
-  var params = {
+  let params = {
     Bucket: config.aws.bucket + dir.replace(config.dev, ""),
     Key: "",
     Body: "",
@@ -121,15 +119,13 @@ function upload(dir, file ){
     ContentType: mime.lookup(file)
   }
 
-  var fileStream = fs.createReadStream(file);
-  fileStream.on("error", function(err) {
-    console.log("File Error", err);
-  });
+  let fileStream = fs.createReadStream(file);
+  fileStream.on("error", (err) => { console.log("File Error", err); });
 
   file = file.replace(config.dev + "/", "");
   params.Body = fileStream;
   params.Key = path.basename(file);
-  s3.upload (params, function (err, data) {
+  s3.upload (params, (err, data) => {
     if (err) {
       console.log("Error", err);
     } if (data) {
