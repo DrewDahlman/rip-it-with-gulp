@@ -1,32 +1,33 @@
 /*
-     _            _                   _        _   _
-  __| | ___ _ __ | | ___  _   _   ___| |_ __ _| |_(_) ___    __ ___      _____
- / _` |/ _ \ '_ \| |/ _ \| | | | / __| __/ _` | __| |/ __|  / _` \ \ /\ / / __|
-| (_| |  __/ |_) | | (_) | |_| | \__ \ || (_| | |_| | (__  | (_| |\ V  V /\__ \
- \__,_|\___| .__/|_|\___/ \__, | |___/\__\__,_|\__|_|\___|  \__,_| \_/\_/ |___/
+     _            _                                  _
+  __| | ___ _ __ | | ___  _   _    __ _ ___ ___  ___| |_ ___
+ / _` |/ _ \ '_ \| |/ _ \| | | |  / _` / __/ __|/ _ \ __/ __|
+| (_| |  __/ |_) | | (_) | |_| | | (_| \__ \__ \  __/ |_\__ \
+ \__,_|\___| .__/|_|\___/ \__, |  \__,_|___/___/\___|\__|___/
            |_|            |___/
 
-Push up to s3 as a static site
+Deploy just assets and run a replace in scripts, styles and markup.
 
 Make sure you have your credentials stored locally in ~/.aws/credentials and have your identity added.
 
 */
-let gulp        = require("gulp"),
-    AWS         = require("aws-sdk"),
-    fs          = require("fs"),
-    path        = require("path"),
-    mime        = require("mime"),
-    config      = require("../config"),
-    manifest    = {},
-    totalFiles  = 0,
-    dirs        = [],
+let gulp          = require("gulp"),
+    AWS           = require("aws-sdk"),
+    fs            = require("fs"),
+    path          = require("path"),
+    mime          = require("mime"),
+    revReplace    = require("gulp-rev-replace"),
+    config        = require("../config"),
+    manifest      = {},
+    totalFiles    = 0,
+    dirs          = [],
     s3;
 
 /*
 ------------------------------------------
 | deploy:void (-)
 ------------------------------------------ */
-gulp.task("deploy-static-aws", gulp.series("dist", aws));
+gulp.task("deploy-assets", gulp.series("dist", aws, replace));
 
 /*
 ------------------------------------------
@@ -52,11 +53,13 @@ function aws(done){
   // deploy
   generateManifest( config.dev)
   .then( () => {
-    parseDir( config.dev )
+    emptyBucket()
     .then( () => {
-      console.log("Site now live at: " + config.aws.bucket + ".s3.amazonaws.com");
-      done();
-    })
+      parseDir( config.dev )
+      .then( () => {
+        done();
+      });
+    });
   });
 }
 
@@ -76,7 +79,6 @@ function emptyBucket(){
     // Clear Everything out
     s3.listObjects(params, (err, data) => {
       if (err) console.log(err);
-      console.log(data)
 
       params = {Bucket: config.aws.bucket};
       params.Delete = {Objects:[]};
@@ -95,7 +97,7 @@ function emptyBucket(){
 
 /*
 ------------------------------------------
-| generateManifest:void (-)
+| generateManifest:promise (-)
 |
 | Gets manifest of all files and total count
 ------------------------------------------ */
@@ -110,8 +112,11 @@ function generateManifest( dir ){
           if( path.extname(file) == "" ){
             dirs.push( file );
             totalFiles--;
+          } else if(path.extname(file) == ".html"){
+            totalFiles--;
           } else {
-            manifest[file] = file;
+            let key = dir.replace(config.dev, "") + "/" + file;
+            manifest[key] = "//" + config.aws.bucket + ".s3.amazonaws.com" + dir.replace(config.dev, "") + "/" + file;
           }
         });
 
@@ -119,7 +124,9 @@ function generateManifest( dir ){
           resolve( generateManifest( config.dev + "/" + dirs[0] ) );
           dirs.shift();
         } else {
-          resolve();
+          fs.writeFile(config.dev + '/asset-manifest.json', JSON.stringify(manifest), () => {
+            resolve();
+          });
         }
       }
     });
@@ -128,7 +135,7 @@ function generateManifest( dir ){
 
 /*
 ------------------------------------------
-| parseDir:void (-)
+| parseDir:promise (-)
 |
 | Recursive function to go over files in directories.
 ------------------------------------------ */
@@ -148,6 +155,8 @@ function parseDir( dir, i = 0 ){
         if( path.extname(file) == "" ){
           dirs.push( file );
           dirFilesCount--;
+        } else if( path.extname(file) == ".html" ){
+          dirFilesCount--;
         } else {
 
           // Upload the file and wait for complete
@@ -160,7 +169,7 @@ function parseDir( dir, i = 0 ){
 
             // If nor more dirs to loop through and i is total files resolve
             if( dirs.length == 0 && i == totalFiles ){
-              resolve();
+              setTimeout( () => { resolve(); }, 1000);
             }
 
             // If dir file count is 0 but more dirs left parse the next dir
@@ -178,11 +187,12 @@ function parseDir( dir, i = 0 ){
 
 /*
 ------------------------------------------
-| upload:void (-)
+| upload:promise (-)
 |
 | Upload files.
 ------------------------------------------ */
 function upload( dir, file ){
+
   return new Promise( (resolve, reject) => {
     let params = {
       Bucket: config.aws.bucket + dir.replace(config.dev, ""),
@@ -203,8 +213,29 @@ function upload( dir, file ){
         console.log("Error", err);
       } if (data) {
         console.log("Upload Success", data.Location);
-        resolve();
       }
+      resolve();
     });
+  });
+}
+
+/*
+------------------------------------------
+| replace:stream (-)
+|
+| Replace all mentions of assets with URL.
+------------------------------------------ */
+function replace(done){
+  let asset_manifest = gulp.src(config.dev + "/asset-manifest.json");
+
+  return new Promise( (resolve, reject) => {
+    gulp.src([config.dev + "/**/*.html", config.dev + "/**/*.sass", config.dev + "/**/*.js"])
+      .pipe(revReplace({manifest: asset_manifest}))
+      .pipe(gulp.dest(config.dev))
+      .on('finish', () => {
+        fs.unlink(config.dev + "/asset-manifest.json", () => {
+          resolve();
+        });
+      });
   });
 }
