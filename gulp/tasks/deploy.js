@@ -119,18 +119,18 @@ function fillBucket(){
 function parseDir( dir ){
   fs.readdir( dir, function(err, files) {
     files.forEach( function(file) {
-      if( path.extname(file) != '' ){
-        upload(dir, dir + '/' + file);
+      if( path.extname(file) != "" ){
+        upload(dir, dir + "/" + file);
       } else {
         var params = {
           Bucket: config.aws.bucket,
           Prefix: dir.replace(dir + "/", ""),
-          Key: '',
-          Body: '',
-          ACL: 'public-read'
+          Key: "",
+          Body: "",
+          ACL: "public-read"
         }
         s3.putObject(params, function(){
-          parseDir( dir + '/' + file);
+          parseDir( dir + "/" + file);
         });
       }
     });
@@ -146,15 +146,15 @@ function parseDir( dir ){
 function upload(dir, file ){
   var params = {
     Bucket: config.aws.bucket + dir.replace(config.dev, ""),
-    Key: '',
-    Body: '',
-    ACL: 'public-read',
+    Key: "",
+    Body: "",
+    ACL: "public-read",
     ContentType: mime.lookup(file)
   }
 
   var fileStream = fs.createReadStream(file);
-  fileStream.on('error', function(err) {
-    console.log('File Error', err);
+  fileStream.on("error", function(err) {
+    console.log("File Error", err);
   });
 
   file = file.replace(config.dev + "/", "");
