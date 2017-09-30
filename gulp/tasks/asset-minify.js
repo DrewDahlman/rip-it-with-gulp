@@ -26,7 +26,7 @@ gulp.task("asset-minify", gulp.series(svg));
 | Minify and compress svg.
 ------------------------------------------ */
 function svg(){
-  return gulp.src([ config.assetPath + "/assets/**/*" ], {base: config.assetPath})
+  return gulp.src([ config.assetPath + "/assets/**/*" ])
     .pipe(imagemin([
       imagemin.gifsicle({interlaced: true}),
       imagemin.jpegtran({progressive: true}),
