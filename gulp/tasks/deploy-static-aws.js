@@ -57,7 +57,7 @@ function aws(done){
       parseDir( config.dev )
       .then( () => {
         done();
-        console.log("Site now live at: " + config.aws.bucket + ".s3.amazonaws.com");
+        console.log("Site now live at: " + config.aws.bucket + ".s3-website-" + config.aws.region + ".amazonaws.com");
       });
     });
   });
