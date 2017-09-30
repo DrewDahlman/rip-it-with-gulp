@@ -1,12 +1,12 @@
 /*
-     _            _
-  __| | ___ _ __ | | ___  _   _
- / _` |/ _ \ '_ \| |/ _ \| | | |
-| (_| |  __/ |_) | | (_) | |_| |
- \__,_|\___| .__/|_|\___/ \__, |
+     _            _                   _        _   _
+  __| | ___ _ __ | | ___  _   _   ___| |_ __ _| |_(_) ___    __ ___      _____
+ / _` |/ _ \ '_ \| |/ _ \| | | | / __| __/ _` | __| |/ __|  / _` \ \ /\ / / __|
+| (_| |  __/ |_) | | (_) | |_| | \__ \ || (_| | |_| | (__  | (_| |\ V  V /\__ \
+ \__,_|\___| .__/|_|\___/ \__, | |___/\__\__,_|\__|_|\___|  \__,_| \_/\_/ |___/
            |_|            |___/
 
-Push up to s3!
+Push up to s3 as a static site
 
 Make sure you have your credentials stored locally in ~/.aws/credentials and have your identity added.
 
@@ -22,7 +22,7 @@ let gulp    = require("gulp"),
 ------------------------------------------
 | deploy:void (-)
 ------------------------------------------ */
-gulp.task("deploy", gulp.series("dist", aws));
+gulp.task("deploy-static-aws", gulp.series("dist", aws));
 
 /*
 ------------------------------------------
@@ -46,7 +46,7 @@ function aws(done){
   s3 = new AWS.S3();
   emptyBucket(function(){
     console.log("Clean Complete");
-    fillBucket();
+    parseDir( config.dev );
   });
   done();
 }
@@ -83,35 +83,6 @@ function emptyBucket(callback){
 
 /*
 ------------------------------------------
-| fillBucket:void (-)
-|
-| Upload files to the bucket.
-| Loop over all files in directory if a folder
-| Upload directly, if file upload to partent directory.
------------------------------------------- */
-function fillBucket(){
-  fs.readdir( config.dev, function(err, files) {
-    files.forEach( function(file) {
-      if( path.extname(file) != "" ){
-        upload(config.dev, config.dev + "/" + file);
-      } else {
-        var params = {
-          Bucket: config.aws.bucket,
-          Prefix: config.dev.replace(config.dev + "/", ""),
-          Key: "",
-          Body: "",
-          ACL: "public-read"
-        }
-        s3.putObject(params, function(){
-          parseDir( config.dev + "/" + file);
-        });
-      }
-    });
-  });
-}
-
-/*
-------------------------------------------
 | parseDir:void (-)
 |
 | Recursive function to go over files in directories.
@@ -129,9 +100,7 @@ function parseDir( dir ){
           Body: "",
           ACL: "public-read"
         }
-        s3.putObject(params, function(){
-          parseDir( dir + "/" + file);
-        });
+        parseDir( dir + "/" + file);
       }
     });
   });
