@@ -98,60 +98,60 @@ Sometimes you may want to just deploy assets to s3, this can be done with `gulp 
 ## Tasks
 run `gulp --tasks`
 <pre>
-  ├── clean
-  ├── cleanup
-  ├── copy
-  ├─┬ default
-  │ └─┬ series
-  │   ├── clean
-  │   ├── scripts
-  │   ├── styles
-  │   ├── markup
-  │   ├── copy
-  │   └─┬ parallel
-  │     ├── watch
-  │     └── server
-  ├─┬ deploy-assets
-  │ └─┬ series
-  │   ├── dist
-  │   ├── aws
-  │   └── replace
-  ├─┬ deploy-static-aws
-  │ └─┬ series
-  │   ├── dist
-  │   └── aws
-  ├─┬ dist
-  │ └─┬ series
-  │   ├── clean
-  │   ├── scripts
-  │   ├── styles
-  │   ├── markup
-  │   ├── rev
-  │   ├── replace
-  │   ├── clean
-  │   ├── copy
-  │   └── cleanup
-  ├─┬ markup
-  │ └─┬ series
-  │   └── compileHTML
-  ├─┬ replace
-  │ └─┬ series
-  │   └── replaceRefs
-  ├─┬ rev
-  │ └─┬ series
-  │   ├── revScripts
-  │   ├── copySourceMaps
-  │   └── revStyles
-  ├─┬ scripts
-  │ └─┬ series
-  │   ├── setConfiguration
-  │   ├── getManifest
-  │   └── compileScripts
-  ├── server
-  ├─┬ styles
-  │ └─┬ series
-  │   ├── lint
-  │   ├── build
-  │   └── minify
-  └── watch
+├── clean
+├── cleanup
+├── copy
+├─┬ default
+│ └─┬ series
+│   ├── clean
+│   ├── scripts
+│   ├── styles
+│   ├── markup
+│   ├── copy
+│   └─┬ parallel
+│     ├── watch
+│     └── server
+├─┬ deploy-assets
+│ └─┬ series
+│   ├── dist
+│   ├── aws
+│   └── replace
+├─┬ deploy-static-aws
+│ └─┬ series
+│   ├── dist
+│   └── aws
+├─┬ dist
+│ └─┬ series
+│   ├── clean
+│   ├── scripts
+│   ├── styles
+│   ├── markup
+│   ├── rev
+│   ├── replace
+│   ├── clean
+│   ├── copy
+│   └── cleanup
+├─┬ markup
+│ └─┬ series
+│   └── compileHTML
+├─┬ replace
+│ └─┬ series
+│   └── replaceRefs
+├─┬ rev
+│ └─┬ series
+│   ├── revScripts
+│   ├── copySourceMaps
+│   └── revStyles
+├─┬ scripts
+│ └─┬ series
+│   ├── setConfiguration
+│   ├── getManifest
+│   └── compileScripts
+├── server
+├─┬ styles
+│ └─┬ series
+│   ├── lint
+│   ├── build
+│   └── minify
+└── watch
 </pre>
