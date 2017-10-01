@@ -229,7 +229,7 @@ function replace(done){
   let asset_manifest = gulp.src(config.dev + "/asset-manifest.json");
 
   return new Promise( (resolve, reject) => {
-    gulp.src([config.dev + "/**/*.html", config.dev + "/**/*.sass", config.dev + "/**/*.js"])
+    gulp.src([config.dev + "/**/*.html", config.dev + "/**/*.css", config.dev + "/**/*.js"])
       .pipe(revReplace({manifest: asset_manifest}))
       .pipe(gulp.dest(config.dev))
       .on('finish', () => {
