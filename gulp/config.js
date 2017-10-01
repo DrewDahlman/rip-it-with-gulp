@@ -14,6 +14,13 @@ module.exports = {
     "browserlist": ["> 0.5%", "last 2 versions", "Firefox ESR", "Opera 12.1"]
   },
 
+  // AWS settings
+  "aws": {
+    "identity": "rip-it-with-gulp",
+    "bucket": "rip-it-with-gulp",
+    "region": "us-east-1"
+  },
+
   // Meta for frontend static templates
   "meta": {
     "google_analytics": "1234",
