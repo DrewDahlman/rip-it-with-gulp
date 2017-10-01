@@ -92,6 +92,9 @@ The project comes with a built in `deploy-static-aws` task that will run a dist 
 
 In order to use this make sure you have configured your `~/.aws/credentials` file for the user with the access key and secret, as well as the `gulp/config.js` with the identity to use, the bucket and the region.
 
+## Deploy assets
+Sometimes you may want to just deploy assets to s3, this can be done with `gulp deploy-assets`. This will upload all assets to the s3 bucket specified in the config.js and do a replace on any references to those assets in html, css and js.
+
 ## Tasks
 run `gulp --tasks`
 <pre>
