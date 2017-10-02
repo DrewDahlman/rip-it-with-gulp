@@ -25,5 +25,5 @@ gulp.task("clean", gulp.series(remove));
 | Deletes everything in specified directories.
 ------------------------------------------ */
 function remove(done){
-  return del( config.dev);
+  return del( config.dev, { force: true });
 }

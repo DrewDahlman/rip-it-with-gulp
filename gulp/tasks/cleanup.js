@@ -45,6 +45,6 @@ function copyProd(){
 | Once moved delete the directory.
 ------------------------------------------ */
 function destroy(done){
-  return del(config.prod);
+  return del(config.prod,{ force: true });
 }
 
