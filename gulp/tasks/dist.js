@@ -25,5 +25,5 @@ let gulp = require("gulp");
 | - copy
 | - cleanup
 ------------------------------------------ */
-gulp.task("dist", gulp.series("clean", "scripts", "styles",  "markup",  "rev", "replace", "clean", "copy", "cleanup"));
+gulp.task("dist", gulp.series("clean", "scripts", "styles",  "markup",  "rev", "replace", "clean", "asset-minify", "cleanup"));
 
