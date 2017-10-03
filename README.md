@@ -98,6 +98,7 @@ Sometimes you may want to just deploy assets to s3, this can be done with `gulp 
 ## Tasks
 run `gulp --tasks`
 <pre>
+├── asset-minify
 ├── clean
 ├── cleanup
 ├── copy
@@ -129,7 +130,7 @@ run `gulp --tasks`
 │   ├── rev
 │   ├── replace
 │   ├── clean
-│   ├── copy
+│   ├── asset-minify
 │   └── cleanup
 ├─┬ markup
 │ └─┬ series
