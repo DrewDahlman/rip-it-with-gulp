@@ -19,6 +19,7 @@ let gulp    = require("gulp"),
 ------------------------------------------ */
 gulp.task("watch", function(){
   gulp.watch( config.watchPath + "/scripts/**/**/*.js", gulp.parallel("scripts") );
+  gulp.watch( config.watchPath + "/templates/**/**/*.html", gulp.parallel("scripts") );
   gulp.watch( config.watchPath + "/styles/**/**/*.sass", gulp.parallel("styles") );
   gulp.watch( config.watchPath + "/markup/**/**/*.html", gulp.parallel("markup") );
 });
