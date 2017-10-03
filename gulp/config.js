@@ -27,6 +27,12 @@ module.exports = {
     "site_title": "Rip it with Gulp",
     "site_description": "An example project",
     "site_keywords": "Rip it with gulp!",
-    "environment": process.env.NODE_ENV
+    "robots": () => {
+      if( process.env.NODE_ENV == "production" ) {
+        return "<META NAME='ROBOTS' CONTENT='INDEX, FOLLOW'>";
+      } else {
+        return "<META NAME='ROBOTS' CONTENT='NOINDEX, NOFOLLOW'>";
+      }
+    }
   }
 };
