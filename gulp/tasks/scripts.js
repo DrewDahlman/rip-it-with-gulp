@@ -50,7 +50,7 @@ function getManifest(done){
     scriptManifest.sources( ( sources ) => {
       for( let i = 0; i < sources.length; i++ ){
         let _s = sources[i];
-        manifest[_s] = "./" + config.assetPath + "/scripts/" + _s + ".js";
+        manifest[_s] = config.assetPath + "/scripts/" + _s + ".js";
         srcs.push(config.assetPath + "/scripts/" + _s + ".js");
       }
       resolve();
