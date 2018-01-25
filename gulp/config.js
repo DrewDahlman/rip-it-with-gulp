@@ -18,7 +18,8 @@ module.exports = {
   "aws": {
     "identity": "rip-it-with-gulp",
     "bucket": "rip-it-with-gulp",
-    "region": "us-east-1"
+    "region": "us-east-1",
+    "cloudfrontID": ""
   },
 
   // Meta for frontend static templates

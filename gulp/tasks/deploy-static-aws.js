@@ -58,6 +58,25 @@ function aws(done){
       .then( () => {
         done();
         console.log("Site now live at: " + config.aws.bucket + ".s3-website-" + config.aws.region + ".amazonaws.com");
+        if( process.env.NODE_ENV == "production" && config.aws.cloudfrontID != "" ){
+          let cloudfront = new AWS.CloudFront({apiVersion: '2017-03-25'});
+          var params = {
+              DistributionId: config.aws.cloudfrontID,
+              InvalidationBatch: { 
+                CallerReference: Math.random() + '', 
+                Paths: { 
+                  Quantity: 1,
+                  Items: [
+                    '/',
+                  ]
+                }
+              }
+            };
+            cloudfront.createInvalidation(params, function(err, data) {
+              if (err) console.log(err, err.stack); // an error occurred
+              else     console.log(data);           // successful response
+            });
+        }
       });
     });
   });
