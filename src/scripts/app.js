@@ -1,5 +1,4 @@
-/*
+let AppM = require("./models/app-m"),
+  AppC = require("./controllers/app-c");
 
-Notes.
-
-*/
+module.exports = new AppC({"model": new AppM()});
