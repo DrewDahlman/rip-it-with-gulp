@@ -20,6 +20,8 @@ let gulp        = require("gulp"),
     manifest    = {},
     totalFiles  = 0,
     dirs        = [],
+    savedCount  = 0,
+    fileCount   = 0,
     s3;
 
 /*
@@ -50,34 +52,31 @@ function aws(done){
   s3 = new AWS.S3();
 
   // deploy
-  generateManifest( config.dev)
+  emptyBucket()
   .then( () => {
-    emptyBucket()
+    parseDir( config.dev )
     .then( () => {
-      parseDir( config.dev )
-      .then( () => {
-        done();
-        console.log("Site now live at: " + config.aws.bucket + ".s3-website-" + config.aws.region + ".amazonaws.com");
-        if( process.env.NODE_ENV == "production" && config.aws.cloudfrontID != "" ){
-          let cloudfront = new AWS.CloudFront({apiVersion: '2017-03-25'});
-          var params = {
-              DistributionId: config.aws.cloudfrontID,
-              InvalidationBatch: { 
-                CallerReference: Math.random() + '', 
-                Paths: { 
-                  Quantity: 1,
-                  Items: [
-                    '/',
-                  ]
-                }
+      done();
+      console.log("Site now live at: " + config.aws.bucket + ".s3-website-" + config.aws.region + ".amazonaws.com");
+      if( process.env.NODE_ENV == "production" && config.aws.cloudfrontID != "" ){
+        let cloudfront = new AWS.CloudFront({apiVersion: '2017-03-25'});
+        var params = {
+            DistributionId: config.aws.cloudfrontID,
+            InvalidationBatch: { 
+              CallerReference: Math.random() + '', 
+              Paths: { 
+                Quantity: 1,
+                Items: [
+                  '/',
+                ]
               }
-            };
-            cloudfront.createInvalidation(params, function(err, data) {
-              if (err) console.log(err, err.stack); // an error occurred
-              else     console.log(data);           // successful response
-            });
-        }
-      });
+            }
+          };
+          cloudfront.createInvalidation(params, function(err, data) {
+            if (err) console.log(err, err.stack); // an error occurred
+            else     console.log(data);           // successful response
+          });
+      }
     });
   });
 }
@@ -116,39 +115,6 @@ function emptyBucket(){
 
 /*
 ------------------------------------------
-| generateManifest:void (-)
-|
-| Gets manifest of all files and total count
------------------------------------------- */
-function generateManifest( dir ){
-  return new Promise( (resolve, reject) => {
-    fs.readdir( dir, (err, files) => {
-
-      if(files){
-        totalFiles += files.length;
-
-        files.forEach( (file) => {
-          if( path.extname(file) == "" ){
-            dirs.push( file );
-            totalFiles--;
-          } else {
-            manifest[file] = file;
-          }
-        });
-
-        if( dirs.length > 0 ){
-          resolve( generateManifest( config.dev + "/" + dirs[0] ) );
-          dirs.shift();
-        } else {
-          resolve();
-        }
-      }
-    });
-  });
-}
-
-/*
-------------------------------------------
 | parseDir:void (-)
 |
 | Recursive function to go over files in directories.
@@ -159,40 +125,44 @@ function parseDir( dir, i = 0 ){
     // Read the directory
     fs.readdir( dir, (err, files) => {
 
-      // Get the total file count for the directory
-      let dirFilesCount = files.length;
+      if( files ){
+        // Get the total file count for the directory
+        let dirFilesCount = files.length;
+        fileCount += files.length;
 
-      // Loop each file
-      files.forEach( (file) => {
+        // Loop each file
+        files.forEach( (file) => {
 
-        // if the file is a direcory remove it from count and push into array
-        if( path.extname(file) == "" ){
-          dirs.push( file );
-          dirFilesCount--;
-        } else {
-
-          // Upload the file and wait for complete
-          upload(dir, dir + "/" + file)
-          .then( () => {
-
-            // Reduce the file count and increment i
+          // if the file is a direcory remove it from count and push into array
+          if( path.extname(file) == "" ){
+            dirs.push( file );
             dirFilesCount--;
-            i++;
+            fileCount--;
+            resolve( parseDir( dir + "/" + file, i) );
+          } else {
 
-            // If nor more dirs to loop through and i is total files resolve
-            if( dirs.length == 0 && i == totalFiles ){
-              resolve();
-            }
+            // Upload the file and wait for complete
+            upload(dir, dir + "/" + file)
+            .then( () => {
 
-            // If dir file count is 0 but more dirs left parse the next dir
-            if( dirFilesCount == 0 && dirs.length > 0 ){
-              resolve( parseDir( config.dev + "/" + dirs[0], i) );
-              dirs.shift();
-            }
+              // Reduce the file count and increment i
+              dirFilesCount--;
+              i++;
+              savedCount++;
 
-          });
-        }
-      });
+              if( fileCount == savedCount ){
+                resolve();
+              }
+              // If dir file count is 0 but more dirs left parse the next dir
+              if( dirFilesCount == 0 && dirs.length > 0 ){
+                resolve( parseDir( config.dev + "/" + dirs[0], i) );
+                dirs.shift();
+              }
+
+            });
+          }
+        });
+      }
     });
   });
 }
