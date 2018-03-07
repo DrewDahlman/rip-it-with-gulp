@@ -51,7 +51,8 @@
     "gulp-util": "^3.0.8",
     "modernizr-webpack-plugin": "^1.0.6",
     "mustache-loader": "^1.2.0",
-    "webpack": "^3.6.0",
-    "webpack-stream": "^4.0.0"
+    "webpack": "^4.0.0-beta.3",
+    "webpack-cli": "^2.0.10",
+    "webpack-stream": "^4.0.2"
   }
 }

@@ -38,7 +38,7 @@ module.exports = {
         test: /\.html$/,
         loader: "mustache-loader"
       }
-    ]
+    ],
   },
   resolve: {
     alias: {

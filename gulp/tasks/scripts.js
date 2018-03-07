@@ -68,7 +68,7 @@ function getManifest(done){
 function compileScripts(){
   // Set the entry based on manifest
   webpackConfig.entry = manifest;
-
+  
   return new Promise( (resolve, reject) => {
     gulp.src(srcs, {since: gulp.lastRun(compileScripts)} )
       .pipe(webpackStream(webpackConfig, null, (err, stats) => {
@@ -76,7 +76,7 @@ function compileScripts(){
           resolve();
         }
       ))
-      .on("error", handleErrors)
+      // .on("error", handleErrors)
       .pipe(gulp.dest( config.dev + "/scripts" ))
   });
 }

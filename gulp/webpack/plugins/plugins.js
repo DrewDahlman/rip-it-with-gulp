@@ -39,11 +39,11 @@ module.exports = {
       new webpack.ProvidePlugin({
         _: "lodash"
       }),
-      new webpack.optimize.CommonsChunkPlugin({
-        name: "commons",
-        filename: "commons.js",
-        minChunks: 0,
-      }),
+      // new webpack.optimize.splitChunks({
+      //   name: "commons",
+      //   filename: "commons.js",
+      //   minChunks: 0,
+      // }),
       new ModernizrWebpackPlugin(modernizr_config),
       new webpack.NoEmitOnErrorsPlugin()
     ];
@@ -63,11 +63,11 @@ module.exports = {
       new webpack.ProvidePlugin({
         _: "lodash"
       }),
-      new webpack.optimize.CommonsChunkPlugin({
-        name: "commons",
-        filename: "commons.js",
-        minChunks: 0,
-      }),
+      // new webpack.optimize.splitChunks({
+      //   name: "commons",
+      //   filename: "commons.js",
+      //   minChunks: 0,
+      // }),
       new ModernizrWebpackPlugin(modernizr_config),
       new webpack.NoEmitOnErrorsPlugin(),
       new webpack.optimize.UglifyJsPlugin({
