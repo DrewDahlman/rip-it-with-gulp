@@ -17,11 +17,12 @@ let gulp        = require("gulp"),
     path        = require("path"),
     mime        = require("mime"),
     config      = require("../config"),
-    manifest    = {},
+    _           = require("lodash"),
+    glob        = require("glob"),
+    manifest    = [],
+    uploaded    = [],
+    promises    = [],
     totalFiles  = 0,
-    dirs        = [],
-    savedCount  = 0,
-    fileCount   = 0,
     s3;
 
 /*
@@ -52,33 +53,47 @@ function aws(done){
   s3 = new AWS.S3();
 
   // deploy
-  emptyBucket()
+  generateManifest()
+  .then( emptyBucket )
+  .catch( (err) => {
+    console.log(err);
+  })
+  .then( upload )
+  .catch( (err) => {
+    console.log(err);
+  })
   .then( () => {
-    parseDir( config.dev )
-    .then( () => {
-      done();
-      console.log("Site now live at: " + config.aws.bucket + ".s3-website-" + config.aws.region + ".amazonaws.com");
-      if( process.env.NODE_ENV == "production" && config.aws.cloudfrontID != "" ){
-        let cloudfront = new AWS.CloudFront({apiVersion: '2017-03-25'});
-        var params = {
-            DistributionId: config.aws.cloudfrontID,
-            InvalidationBatch: { 
-              CallerReference: Math.random() + '', 
-              Paths: { 
-                Quantity: 1,
-                Items: [
-                  '/',
-                ]
-              }
-            }
-          };
-          cloudfront.createInvalidation(params, function(err, data) {
-            if (err) console.log(err, err.stack); // an error occurred
-            else     console.log(data);           // successful response
-          });
-      }
-    });
+
+    // Complete the promise chain
+    done();
+
+    // If production invalidate cloudfront
+    if( process.env.NODE_ENV == "production" && config.aws.cloudfrontID != "" ){
+      let cloudfront = new AWS.CloudFront({apiVersion: '2017-03-25'});
+      var params = {
+        DistributionId: config.aws.cloudfrontID,
+        InvalidationBatch: { 
+          CallerReference: Math.random() + '', 
+          Paths: { 
+            Quantity: 1,
+            Items: [
+              '/',
+            ]
+          }
+        }
+      };
+
+      // Invalidate cloudfront
+      cloudfront.createInvalidation(params, function(err, data) {
+        if (err) console.log(err, err.stack); // an error occurred
+        else     console.log(data);           // successful response
+      });
+    }
+
+    // Live message
+    console.log("Site now live at: " + config.aws.bucket + ".s3-website-" + config.aws.region + ".amazonaws.com");
   });
+
 }
 
 /*
@@ -110,6 +125,34 @@ function emptyBucket(){
         resolve();
       });
     });
+
+  });
+}
+
+/*
+------------------------------------------
+| generateManifest:void (-)
+------------------------------------------ */
+function generateManifest(){
+  return Promise.resolve()
+    .then( getTotalFiles )
+    .then( () => {
+      parseDir( config.dev );
+    });
+}
+
+/*
+------------------------------------------
+| getTotalFiles:void (-)
+------------------------------------------ */
+function getTotalFiles() {
+  return new Promise( (resolve, reject) => {
+    glob( config.dev + "/**/*", (err, files) => {
+      totalFiles = _.filter( files, (f) => {
+        return path.extname(f) != "";
+      }).length;
+      resolve();
+    });
   });
 }
 
@@ -119,52 +162,37 @@ function emptyBucket(){
 |
 | Recursive function to go over files in directories.
 ------------------------------------------ */
-function parseDir( dir, i = 0 ){
-  return new Promise( (resolve, reject) => {
+function parseDir( dir ){
+  return Promise.resolve().then( () => {
 
-    // Read the directory
+    // Read each directory
     fs.readdir( dir, (err, files) => {
 
-      if( files ){
-        // Get the total file count for the directory
-        let dirFilesCount = files.length;
-        fileCount += files.length;
+      // Loop files
+      _.each( files, (file) => {
 
-        // Loop each file
-        files.forEach( (file) => {
+        // Check if file is directory
+        if( path.extname(file) == "" ){
 
-          // if the file is a direcory remove it from count and push into array
-          if( path.extname(file) == "" ){
-            dirs.push( file );
-            dirFilesCount--;
-            fileCount--;
-            resolve( parseDir( dir + "/" + file, i) );
-          } else {
+          // Directory Path
+          let dirPath = `${dir}/${file}`;
 
-            // Upload the file and wait for complete
-            upload(dir, dir + "/" + file)
-            .then( () => {
+          // Search that directory
+          parseDir( dirPath );
+        } else {
 
-              // Reduce the file count and increment i
-              dirFilesCount--;
-              i++;
-              savedCount++;
+          // File Path
+          let filePath = `${dir}/${file}`;
 
-              if( fileCount == savedCount ){
-                resolve();
-              }
-              // If dir file count is 0 but more dirs left parse the next dir
-              if( dirFilesCount == 0 && dirs.length > 0 ){
-                resolve( parseDir( config.dev + "/" + dirs[0], i) );
-                dirs.shift();
-              }
-
-            });
-          }
-        });
-      }
-    });
-  });
+          // Push into manifest
+          manifest.push({
+            dir: dir,
+            path: filePath 
+          });
+        }
+      })
+    })
+  })
 }
 
 /*
@@ -173,29 +201,41 @@ function parseDir( dir, i = 0 ){
 |
 | Upload files.
 ------------------------------------------ */
-function upload( dir, file ){
+function upload(){
   return new Promise( (resolve, reject) => {
-    let params = {
-      Bucket: config.aws.bucket + dir.replace(config.dev, ""),
-      Key: "",
-      Body: "",
-      ACL: "public-read",
-      ContentType: mime.lookup(file)
-    }
 
-    let fileStream = fs.createReadStream(file);
-    fileStream.on("error", (err) => { console.log("File Error", err); });
+    // Loop the manifest
+    _.each( manifest, (fileObj) => {
+      let dir = fileObj.dir;
+      let file = fileObj.path;
 
-    file = file.replace(config.dev + "/", "");
-    params.Body = fileStream;
-    params.Key = path.basename(file);
-    s3.upload (params, (err, data) => {
-      if (err) {
-        console.log("Error", err);
-      } if (data) {
-        console.log("Upload Success", data.Location);
-        resolve();
+      let params = {
+        Bucket: config.aws.bucket + dir.replace(config.dev, ""),
+        Key: "",
+        Body: "",
+        ACL: "public-read",
+        ContentType: mime.lookup(file)
       }
+
+      let fileStream = fs.createReadStream(file);
+      fileStream.on("error", (err) => { console.log("File Error", err); });
+
+      file = file.replace(config.dev + "/", "");
+      params.Body = fileStream;
+      params.Key = path.basename(file);
+      
+      s3.upload (params, (err, data) => {
+        if (err) {
+          console.log("Error", err);
+          reject();
+        } if (data) {
+          console.log("Upload Success", data.Location);
+          uploaded.push(file);
+          if( uploaded.length == totalFiles ){
+            resolve();
+          }
+        }
+      });
     });
   });
 }
