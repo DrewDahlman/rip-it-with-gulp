@@ -28,7 +28,7 @@ gulp.task("markup", gulp.series(compileHTML));
 | Compiles markup in mustache to static HTML.
 ------------------------------------------ */
 function compileHTML(){
-  return gulp.src(config.assetPath + "/markup/*.html")
+  return gulp.src(config.assetPath + "/markup/**/*.html")
     .pipe(mustache(config.meta, {
       extension: ".html"
     }))

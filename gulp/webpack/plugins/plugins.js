@@ -42,7 +42,9 @@ module.exports = {
       new webpack.optimize.CommonsChunkPlugin({
         name: "commons",
         filename: "commons.js",
-        minChunks: 0,
+        minChunks: function(module){
+          return module.context && module.context.includes("node_modules");
+        }
       }),
       new ModernizrWebpackPlugin(modernizr_config),
       new webpack.NoEmitOnErrorsPlugin()
@@ -66,7 +68,9 @@ module.exports = {
       new webpack.optimize.CommonsChunkPlugin({
         name: "commons",
         filename: "commons.js",
-        minChunks: 0,
+        minChunks: function(module){
+          return module.context && module.context.includes("node_modules");
+        }
       }),
       new ModernizrWebpackPlugin(modernizr_config),
       new webpack.NoEmitOnErrorsPlugin(),
