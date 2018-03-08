@@ -71,7 +71,7 @@ function compileScripts(){
   
   return new Promise( (resolve, reject) => {
     gulp.src(srcs, {since: gulp.lastRun(compileScripts)} )
-      .pipe(webpackStream(webpackConfig, null, (err, stats) => {
+      .pipe(webpackStream(webpackConfig, webpack, (err, stats) => {
           logResults(stats);
           resolve();
         }

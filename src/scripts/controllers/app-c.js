@@ -7,7 +7,10 @@ let SubM = require("../models/sub-m"),
 class AppC extends BaseC {
   constructor(init) {
     super(init);
-
+    let foo = [1,2,3];
+    _.each( foo, (f) => {
+      console.log(f)
+    })
     this._sub_c = new SubC({"model": new SubM()});
 
     // test

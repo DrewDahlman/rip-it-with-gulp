@@ -16,20 +16,21 @@ let path      = require("path"),
 let PLUGINS = require("./plugins/plugins");
 
 module.exports = {
+  mode: "production",
   output: {
     filename: "[name].js",
   },
   module: {
     rules: [
-      {
-        enforce: "pre",
-        test: /\.js$/,
-        loader: "eslint-loader",
-        query: {
-          configFile: "./.eslintrc.js",
-          fix: true
-        }
-      },
+      // {
+      //   enforce: "pre",
+      //   test: /\.js$/,
+      //   loader: "eslint-loader",
+      //   query: {
+      //     configFile: "./.eslintrc.js",
+      //     fix: true
+      //   }
+      // },
       {
         test: /.js$/,
         loader: "babel-loader",

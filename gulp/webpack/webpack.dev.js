@@ -15,20 +15,21 @@ let path    = require("path"),
 let PLUGINS = require("./plugins/plugins");
 
 module.exports = {
+  mode: "development",
   output: {
     filename: "[name].js",
   },
   module: {
     rules: [
-      {
-        enforce: "pre",
-        test: /\.js$/,
-        loader: "eslint-loader",
-        query: {
-          configFile: "./.eslintrc.js",
-          fix: true
-        }
-      },
+      // {
+      //   enforce: "pre",
+      //   test: /\.js$/,
+      //   loader: "eslint-loader",
+      //   query: {
+      //     configFile: "./.eslintrc.js",
+      //     fix: true
+      //   }
+      // },
       {
         test: /.js$/,
         loader: "babel-loader",
@@ -40,10 +41,22 @@ module.exports = {
       }
     ],
   },
+  optimization: {
+    splitChunks: {
+  cacheGroups: {
+    commons: {
+      name: "commons",
+      chunks: "initial",
+      minChunks: 2
+    }
+  }
+}
+  },
   resolve: {
     alias: {
       templates: path.resolve(__dirname, "../../src/templates")
     }
   },
+
   plugins: PLUGINS.devPlugins()
 };
