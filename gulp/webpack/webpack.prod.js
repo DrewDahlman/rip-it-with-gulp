@@ -42,6 +42,17 @@ module.exports = {
       }
     ]
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          name: "commons",
+          chunks: "initial",
+          minChunks: 2
+        }
+      }
+    }
+  },
   resolve: {
     alias: {
       templates: path.resolve(__dirname, "../../src/templates")

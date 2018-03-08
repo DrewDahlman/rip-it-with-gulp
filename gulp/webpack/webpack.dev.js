@@ -43,14 +43,14 @@ module.exports = {
   },
   optimization: {
     splitChunks: {
-  cacheGroups: {
-    commons: {
-      name: "commons",
-      chunks: "initial",
-      minChunks: 2
+      cacheGroups: {
+        commons: {
+          name: "commons",
+          chunks: "initial",
+          minChunks: 2
+        }
+      }
     }
-  }
-}
   },
   resolve: {
     alias: {
