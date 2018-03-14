@@ -66,32 +66,35 @@ function aws(done){
 
     // Complete the promise chain
     done();
+    console.log("Prepping for cloudfront clear....");
 
-    // If production invalidate cloudfront
-    if( process.env.NODE_ENV == "production" && config.aws.cloudfrontID != "" ){
-      let cloudfront = new AWS.CloudFront({apiVersion: '2017-03-25'});
-      var params = {
-        DistributionId: config.aws.cloudfrontID,
-        InvalidationBatch: { 
-          CallerReference: Math.random() + '', 
-          Paths: { 
-            Quantity: 1,
-            Items: [
-              '/',
-            ]
+    setTimeout( () => {
+      // If production invalidate cloudfront
+      if( process.env.NODE_ENV == "production" && env.cloudfrontID != "" ){
+        let cloudfront = new AWS.CloudFront({apiVersion: '2017-03-25'});
+        var params = {
+          DistributionId: env.cloudfrontID,
+          InvalidationBatch: { 
+            CallerReference: Math.random() + '', 
+            Paths: { 
+              Quantity: 1,
+              Items: [
+                '/*',
+              ]
+            }
           }
-        }
-      };
+        };
 
-      // Invalidate cloudfront
-      cloudfront.createInvalidation(params, function(err, data) {
-        if (err) console.log(err, err.stack); // an error occurred
-        else     console.log(data);           // successful response
-      });
-    }
+        // Invalidate cloudfront
+        cloudfront.createInvalidation(params, function(err, data) {
+          if (err) console.log(err, err.stack); // an error occurred
+          else     console.log(data);           // successful response
+        });
+      }
 
-    // Live message
-    console.log("Site now live at: " + config.aws.bucket + ".s3-website-" + config.aws.region + ".amazonaws.com");
+      // Live message
+      console.log("Site now live at: " + env.bucket + ".s3-website-" + env.region + ".amazonaws.com");
+    },5500)
   });
 
 }
