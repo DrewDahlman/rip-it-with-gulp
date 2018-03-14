@@ -21,7 +21,6 @@ let gulp        = require("gulp"),
     glob        = require("glob"),
     manifest    = [],
     uploaded    = [],
-    promises    = [],
     totalFiles  = 0,
     s3;
 
