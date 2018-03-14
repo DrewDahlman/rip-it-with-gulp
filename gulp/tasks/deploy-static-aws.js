@@ -39,14 +39,21 @@ gulp.task("deploy-static-aws", gulp.series("dist", aws));
 ------------------------------------------ */
 function aws(done){
 
+  // Set the environment
+  if( process.env.NODE_ENV == "production" ){
+    env = config.aws.production;
+  } else {
+    env = config.aws.staging;
+  }
+
   // Set the identity
   AWS.config.credentials = new AWS.SharedIniFileCredentials({
-    profile: config.aws.identity
+    profile: env.identity
   });
 
   // For dev purposes only
   AWS.config.update({
-    region: config.aws.region
+    region: env.region
   });
 
   // S3
@@ -108,7 +115,7 @@ function aws(done){
 function emptyBucket(){
   return new Promise( (resolve, reject) => {
     let params = {
-      Bucket: config.aws.bucket,
+      Bucket: env.bucket,
       Prefix: ""
     };
 
@@ -116,7 +123,7 @@ function emptyBucket(){
     s3.listObjects(params, (err, data) => {
       if (err) console.log(err);
 
-      params = {Bucket: config.aws.bucket};
+      params = {Bucket: env.bucket};
       params.Delete = {Objects:[]};
 
       data.Contents.forEach( (content) => {
@@ -213,7 +220,7 @@ function upload(){
       let file = fileObj.path;
 
       let params = {
-        Bucket: config.aws.bucket + dir.replace(config.dev, ""),
+        Bucket: env.bucket + dir.replace(config.dev, ""),
         Key: "",
         Body: "",
         ACL: "public-read",

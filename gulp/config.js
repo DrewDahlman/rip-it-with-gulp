@@ -16,10 +16,18 @@ module.exports = {
 
   // AWS settings
   "aws": {
-    "identity": "rip-it-with-gulp",
-    "bucket": "rip-it-with-gulp",
-    "region": "us-east-1",
-    "cloudfrontID": ""
+    "staging": {
+      "identity": "rip-it-with-gulp",
+      "bucket": "rip-it-with-gulp-staging",
+      "region": "us-east-1",
+      "cloudfrontID": ""
+    },
+    "production": {
+      "identity": "rip-it-with-gulp",
+      "bucket": "rip-it-with-gulp",
+      "region": "us-east-1",
+      "cloudfrontID": ""
+    }
   },
 
   // Meta for frontend static templates
